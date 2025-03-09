@@ -1,4 +1,3 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import LandingPage from "../../LANDING PAGE/landingpage";
 import WEB001 from "../../WEB001/WEB001";
