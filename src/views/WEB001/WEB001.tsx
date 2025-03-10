@@ -1,12 +1,21 @@
+import Instructions from "../Common/Components/Instructions";
+import { Timer } from "../Common/Components/Timer";
+
 export default function WEB001() {
-return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
-    <div className="max-w-3xl text-center bg-white shadow-lg rounded-lg p-8">
-        <h2 className="text-3xl font-bold text-gray-800">Welcome to WEB001</h2>
-        <p className="text-gray-600 mt-4">
-        This is a simple React + Vite + TailwindCSS setup.
-        </p>
-    </div>
-    </main>
-);
+    const handleSubmit = () => {
+        alert("Exam submitted!");
+    };
+
+    const handleExit = () => {
+        alert("Exiting exam...");
+    };
+
+    return (
+        <div className="">
+            <Timer onSubmit={handleSubmit} onExit={handleExit}/>
+            <div className="container mx-auto max-w-4xl px-4 py-8 md:py-12">
+                <Instructions instruction="You have 2 hours to complete the exam. Once you submit, your score and the time taken will be displayed." />
+            </div>
+        </div>
+    );
 }
