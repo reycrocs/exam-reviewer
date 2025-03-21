@@ -6,7 +6,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="p-5">
+    <nav className="p-4 bg-white drop-shadow-sm">
       <div className="container mx-auto flex justify-between items-center">
         <img src="/prep-it.png" alt="PREP-IT Logo" className="h-8" /> {/* Set height if needed */}
 

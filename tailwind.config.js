@@ -7,7 +7,8 @@ export default {
     theme: {
       extend: {
         fontFamily: {
-          sans: ['Inter', 'sans-serif'],
+          sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          lemon: ['Lemon Milk', 'sans-serif'],
         },
       },
     },
