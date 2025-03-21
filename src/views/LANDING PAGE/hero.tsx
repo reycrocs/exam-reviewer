@@ -43,7 +43,7 @@ export default function Hero() {
     }, []);
 
     return (
-        <section className="flex flex-col items-center min-h-[calc(100vh-68px)] px-6 pt-10 sm:pt-32">
+        <section className="flex flex-col items-center h-screen px-6 pt-10 sm:pt-32">
             {/* Hero Section */}
             <div className="w-full max-w-4xl text-center space-y-8">
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl tracking-tight text-gray-900 leading-tight font-black font-lemon">
