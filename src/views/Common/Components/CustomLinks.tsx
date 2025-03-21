@@ -9,7 +9,7 @@ interface CustomLinksProps {
 
 const CustomLinks: React.FC<CustomLinksProps> = ({ href, text, className = '' }) => {
   return (
-    <a href={href} className={`hover:text-green-600 ${className}`}>
+    <a href={href} className={`hover:text-green-600 ${className} transition-colors duration-300 ease-in-out`}>
       {text}
     </a>
   );

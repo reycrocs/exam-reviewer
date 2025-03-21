@@ -1,11 +1,12 @@
 import React from 'react';
 
 interface CustomButtonProps {
-  text: string; // The text to display on the button
-  onClick: () => void; // Function to be called when the button is clicked
-  className?: string; // Optional custom class names
-  type?: 'button' | 'submit' | 'reset'; // The type of the button, default is 'button'
-  disabled?: boolean; // Optional disabled state
+  text: string;
+  onClick: () => void;
+  className?: string;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  pill?: string; // Optional pill text
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -14,18 +15,29 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   className = '',
   type = 'button',
   disabled = false,
+  pill,
 }) => {
   return (
-    <button
-      type={type}
-      onClick={onClick}
-      className={`px-4 py-2 rounded-md text-sm text-white transition-all duration-200 
-        ${disabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-900 hover:bg-green-600'}
-        ${className}`}
-      disabled={disabled}
-    >
-      {text}
-    </button>
+    <div className="relative inline-block">
+      <button
+        type={type}
+        onClick={onClick}
+        className={`
+          px-4 py-2 rounded-md text-sm text-white 
+          ${disabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-900 hover:bg-green-600'}
+          ${className}
+          transition-colors duration-300 ease-in-out
+        `}
+        disabled={disabled}
+      >
+        {text}
+      </button>
+      {pill && (
+        <span className="absolute -top-2 -right-3 bg-green-600 text-white font-light text-[10px] px-2 py-0.5 rounded-full rotate-[25deg] shadow-md">
+          {pill}
+        </span>
+      )}
+    </div>
   );
 };
 
