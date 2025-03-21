@@ -1,10 +1,12 @@
 import CustomButton from "../Common/Components/CustomButton";
 import Instructions from "../Common/Components/Instructions";
-import { Timer } from "../Common/Components/Timer";
+import { useNavigate } from "react-router-dom";
 import { TopBar } from "./TopBar";
 import { useState } from "react";
 
 export default function WEB001() {
+    const navigate = useNavigate();
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalType, setModalType] = useState("");
 
@@ -18,7 +20,7 @@ export default function WEB001() {
         if (modalType === "submit") {
             alert("Exam submitted!");
         } else if (modalType === "exit") {
-            alert("Exiting exam...");
+            navigate("/");
         }
     };
 

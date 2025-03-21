@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import CustomButton from "../Components/CustomButton";
 import CustomLinks from "../Components/CustomLinks";
+import { useNavigate } from "react-router-dom";
 import { Menu } from "lucide-react";
 export default function Navbar() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -57,7 +59,7 @@ export default function Navbar() {
               ? "bg-white text-gray-900 hover:bg-green-600" 
               : "bg-gray-900 text-white hover:bg-green-600"
             }
-            onClick={() => console.log("button clicked")}
+            onClick={() => navigate("/web001")}
           />
         </ul>
       </div>

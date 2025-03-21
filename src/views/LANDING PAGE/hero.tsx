@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { BookOpen, Settings, Database, Cpu, Code2, Network, Layers, ShieldCheck, Repeat} from "lucide-react";
 import CustomButton from "../Common/Components/CustomButton";
 
@@ -16,6 +17,7 @@ const topics = [
 ];
 
 export default function Hero() {
+    const navigate = useNavigate();
     const marqueeRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -53,7 +55,7 @@ export default function Hero() {
                     <span className="font-black text-gray-900">PREP<span className="text-green-600">IT</span></span> gives you the power to prepare your way—with smart flashcards, real exam simulations, and review tools built to help you pass your IT exams faster and with confidence.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
-                    <CustomButton text="Start Demo" onClick={() => console.log("Start Demo clicked")} />
+                    <CustomButton text="Start Demo" onClick={() => navigate("/web001")} />
                     <span className="text-gray-500 text-sm sm:text-base">or</span>
                     <CustomButton text="Try Flashcards" pill="New" onClick={() => console.log("Try Flashcards clicked")} />
                 </div>
