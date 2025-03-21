@@ -1,4 +1,5 @@
 import { Quote } from "lucide-react";
+import { testimony } from "./testimonials";
 
 export default function Testimonials() {
     return (
@@ -13,27 +14,8 @@ export default function Testimonials() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
-                {[
-                    {
-                        quote: "What I love about PREPIT is how authentic the past exam questions are. It helped me secure a Silver rank in the Philippines and a Bronze overall!",
-                        name: "Brayl James A.",
-                        role: "ITPEC IP Passer - TOP NOTCHER",
-                        image: "https://refreco.vercel.app/brayl_dev.jpg",
-                    },
-                    {
-                        quote: "PREPIT made studying so much easier! The flashcards and exam simulations helped me pass my certification on the first try.",
-                        name: "Jasper Eldrich B.",
-                        role: "ITPEC IP Passer",
-                        image: "https://media.licdn.com/dms/image/v2/D5603AQH_vE8Fr-cEaA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1712771545461?e=2147483647&v=beta&t=oWaPwOQaJuzqqTo48X5V0eDMqxJrl7t_ZMzVFE4qhDE",
-                    },
-                    {
-                        quote: "The platform is super intuitive and mobile-friendly. I was able to practice even while commuting!",
-                        name: "Kyle L.",
-                        role: "ITPEC IP Passer",
-                        image: "https://media.licdn.com/dms/image/v2/C5603AQE3F3THqDG5mg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1603868207304?e=2147483647&v=beta&t=sC7FORNXLtKvqQn637iLjpMOPAj51hcewGqoisHh3SU",
-                    },
-                ].map((testimonial, idx) => (
-                    <div key={idx} className="border rounded-2xl p-6 flex flex-col gap-4 items-start bg-white transition">
+                {testimony.map((testimonial) => (
+                    <div key={testimonial.id} className="border rounded-2xl p-6 flex flex-col gap-4 items-start bg-white transition">
                         <Quote size={32} className="text-green-600" />
                         <p className="text-gray-700 text-sm leading-relaxed flex-1">"{testimonial.quote}"</p>
                         <div className="mt-4 flex items-center gap-3">

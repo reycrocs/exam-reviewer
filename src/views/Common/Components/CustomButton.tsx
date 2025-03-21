@@ -33,7 +33,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
         {text}
       </button>
       {pill && (
-        <span className="absolute -top-2 -right-3 bg-green-600 text-white font-light text-[10px] px-2 py-0.5 rounded-full rotate-[25deg] shadow-md">
+        <span className="absolute -top-2 -right-3 bg-green-600 text-white font-light text-[10px] px-2 py-0.5 rounded-full rotate-[30deg] shadow-md">
           {pill}
         </span>
       )}
