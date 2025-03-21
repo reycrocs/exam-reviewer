@@ -1,6 +1,6 @@
 export default function About() {
     return (
-        <section className="flex flex-col items-center px-6 py-20 bg-gray-50 space-y-12">
+        <section id="about" className="flex flex-col items-center px-6 py-20 bg-gray-50 space-y-12">
             <div className="w-full max-w-4xl text-center space-y-6">
                 <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
                     What is <span className="font-black">PREP<span className="text-green-600">IT</span></span>?

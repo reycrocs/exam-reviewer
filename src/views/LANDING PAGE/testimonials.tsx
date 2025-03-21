@@ -2,7 +2,7 @@ import { Quote } from "lucide-react";
 
 export default function Testimonials() {
     return (
-        <section className="flex flex-col items-center px-6 py-20 bg-gray-50 space-y-12">
+        <section id="testimonials" className="flex flex-col items-center px-6 py-20 bg-gray-50 space-y-12">
             <div className="w-full max-w-4xl text-center space-y-6">
                 <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
                     What Our Users Say

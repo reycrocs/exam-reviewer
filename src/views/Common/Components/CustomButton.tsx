@@ -6,13 +6,13 @@ interface CustomButtonProps {
   className?: string;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
-  pill?: string; // Optional pill text
+  pill?: string;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
   text,
   onClick,
-  className = '',
+  className = "bg-gray-900 text-white hover:bg-green-600",
   type = 'button',
   disabled = false,
   pill,
@@ -23,8 +23,8 @@ const CustomButton: React.FC<CustomButtonProps> = ({
         type={type}
         onClick={onClick}
         className={`
-          px-4 py-2 rounded-md text-sm text-white 
-          ${disabled ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-900 hover:bg-green-600'}
+          px-4 py-2 rounded-md text-sm
+          ${disabled ? 'bg-gray-400 cursor-not-allowed' : ''}
           ${className}
           transition-colors duration-300 ease-in-out
         `}
