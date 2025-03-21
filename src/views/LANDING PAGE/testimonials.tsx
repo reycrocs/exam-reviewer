@@ -16,21 +16,21 @@ export default function Testimonials() {
                 {[
                     {
                         quote: "PREPIT made studying so much easier! The flashcards and exam simulations helped me pass my certification on the first try.",
-                        name: "Alex M.",
-                        role: "IT Graduate",
-                        image: "https://randomuser.me/api/portraits/men/32.jpg",
+                        name: "Jasper Eldrich B.",
+                        role: "ITPEC IP Passer",
+                        image: "https://media.licdn.com/dms/image/v2/D5603AQH_vE8Fr-cEaA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1712771545461?e=2147483647&v=beta&t=oWaPwOQaJuzqqTo48X5V0eDMqxJrl7t_ZMzVFE4qhDE",
                     },
                     {
                         quote: "The platform is super intuitive and mobile-friendly. I was able to practice even while commuting!",
-                        name: "Sarah K.",
-                        role: "Network Engineer",
-                        image: "https://randomuser.me/api/portraits/women/44.jpg",
+                        name: "Kyle L.",
+                        role: "ITPEC IP Passer",
+                        image: "https://media.licdn.com/dms/image/v2/C5603AQE3F3THqDG5mg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1603868207304?e=2147483647&v=beta&t=sC7FORNXLtKvqQn637iLjpMOPAj51hcewGqoisHh3SU",
                     },
                     {
                         quote: "What I love about PREPIT is how real the past exam questions feel. It truly boosted my confidence before the actual exam.",
-                        name: "Michael D.",
-                        role: "Software Developer",
-                        image: "https://randomuser.me/api/portraits/men/45.jpg",
+                        name: "Brayl James A.",
+                        role: "ITPEC IP Passer - SILVER PH / BRONZE OVERALL",
+                        image: "https://i.ibb.co/5XT7NG3x/N-1.png",
                     },
                 ].map((testimonial, idx) => (
                     <div key={idx} className="border rounded-2xl p-6 flex flex-col gap-4 items-start bg-white transition">
