@@ -15,6 +15,12 @@ export default function Testimonials() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
                 {[
                     {
+                        quote: "What I love about PREPIT is how authentic the past exam questions are. It helped me secure a Silver rank in the Philippines and a Bronze overall!",
+                        name: "Brayl James A.",
+                        role: "ITPEC IP Passer - TOP NOTCHER",
+                        image: "https://refreco.vercel.app/brayl_dev.jpg",
+                    },
+                    {
                         quote: "PREPIT made studying so much easier! The flashcards and exam simulations helped me pass my certification on the first try.",
                         name: "Jasper Eldrich B.",
                         role: "ITPEC IP Passer",
@@ -25,12 +31,6 @@ export default function Testimonials() {
                         name: "Kyle L.",
                         role: "ITPEC IP Passer",
                         image: "https://media.licdn.com/dms/image/v2/C5603AQE3F3THqDG5mg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1603868207304?e=2147483647&v=beta&t=sC7FORNXLtKvqQn637iLjpMOPAj51hcewGqoisHh3SU",
-                    },
-                    {
-                        quote: "What I love about PREPIT is how authentic the past exam questions are. It helped me secure a Silver rank in the Philippines and a Bronze overall!",
-                        name: "Brayl James A.",
-                        role: "ITPEC IP Passer - TOP NOTCHER",
-                        image: "https://refreco.vercel.app/brayl_dev.jpg",
                     },
                 ].map((testimonial, idx) => (
                     <div key={idx} className="border rounded-2xl p-6 flex flex-col gap-4 items-start bg-white transition">

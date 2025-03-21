@@ -1,4 +1,4 @@
-import { BookOpen, Clock, Smartphone, UserCheck, DollarSign, Star } from "lucide-react";
+import { BookOpen, Clock, Smartphone, LightbulbIcon, DollarSign, Star } from "lucide-react";
 
 export default function Features() {
     return (
@@ -38,17 +38,17 @@ export default function Features() {
 
                     <div className="border rounded-2xl p-8 flex flex-col items-center text-center transition-all bg-gray-50">
                         <Smartphone className="text-green-600" size={56} />
-                        <h3 className="mt-5 font-semibold text-xl text-gray-800">Mobile-Friendly</h3>
+                        <h3 className="mt-5 font-semibold text-xl text-gray-800">Mobile & User-Friendly Design</h3>
                         <p className="text-gray-600 mt-3 text-sm leading-relaxed">
-                            Access all features on any device with a fully responsive and optimized interface.
+                            Enjoy a responsive, mobile-optimized platform with an intuitive interface for smooth, hassle-free learning on any device.
                         </p>
                     </div>
 
                     <div className="border rounded-2xl p-8 flex flex-col items-center text-center transition-all bg-gray-50">
-                        <UserCheck className="text-green-600" size={56} />
-                        <h3 className="mt-5 font-semibold text-xl text-gray-800">User-Friendly Interface</h3>
+                        <LightbulbIcon className="text-green-600" size={56} />
+                        <h3 className="mt-5 font-semibold text-xl text-gray-800">Insightful Solutions</h3>
                         <p className="text-gray-600 mt-3 text-sm leading-relaxed">
-                            Navigate with ease using an intuitive design made for hassle-free learning.
+                            Some questions include explanations to help you grasp the reasoning behind correct answers and enhance your learning.
                         </p>
                     </div>
 
