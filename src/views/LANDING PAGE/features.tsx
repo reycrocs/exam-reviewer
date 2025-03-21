@@ -2,7 +2,7 @@ import { BookOpen, Clock, Smartphone, UserCheck, DollarSign, Star } from "lucide
 
 export default function Features() {
     return (
-        <section className="flex flex-col items-center w-full px-6 py-20 bg-white">
+        <section id="features" className="flex flex-col items-center w-full px-6 py-20 bg-white">
             <div className="w-full max-w-6xl text-center space-y-12">
                 <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
                     Why Choose <span className="font-black">PREP<span className="text-green-600">IT</span></span>?
