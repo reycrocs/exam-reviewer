@@ -6,7 +6,7 @@ interface TimerNavbarProps {
 }
 export const Timer: React.FC<TimerNavbarProps> = ({ onSubmit, onExit }) => {
     return (
-        <div className="fixed top-0 left-0 w-full bg-white shadow-md z-10">
+        <div className="fixed top-24 left-0 w-full bg-white shadow-md z-10">
           <div className="container mx-auto max-w-4xl px-4 py-3 flex justify-between items-center">
             {/* Timer Section */}
             <div className="text-md md:text-2xl font-bold text-gray-700 flex items-center space-x-2">

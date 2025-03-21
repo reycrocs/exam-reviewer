@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import CustomButton from "../Components/CustomButton";
 import CustomLinks from "../Components/CustomLinks";
-
+import { Menu } from "lucide-react";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
@@ -43,7 +43,7 @@ export default function Navbar() {
           className="md:hidden focus:outline-none"
           onClick={() => setIsOpen(!isOpen)}
         >
-          ☰
+          <Menu />
         </button>
 
         {/* Desktop Menu */}
