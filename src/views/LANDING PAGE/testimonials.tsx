@@ -29,8 +29,8 @@ export default function Testimonials() {
                     {
                         quote: "What I love about PREPIT is how real the past exam questions feel. It truly boosted my confidence before the actual exam.",
                         name: "Brayl James A.",
-                        role: "ITPEC IP Passer - SILVER PH / BRONZE OVERALL",
-                        image: "https://i.ibb.co/5XT7NG3x/N-1.png",
+                        role: "ITPEC IP Passer - TOP NOTCHER",
+                        image: "https://refreco.vercel.app/brayl_dev.jpg",
                     },
                 ].map((testimonial, idx) => (
                     <div key={idx} className="border rounded-2xl p-6 flex flex-col gap-4 items-start bg-white transition">
