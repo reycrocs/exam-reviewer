@@ -1,13 +1,13 @@
 import { Quote } from "lucide-react";
-import { testimony } from "./testimonials";
+import { testimony } from "../../helpers/content";
 
 export default function Testimonials() {
     return (
         <section id="testimonials" className="flex flex-col items-center px-6 py-20 bg-gray-50 space-y-12">
             <div className="w-full max-w-4xl text-center space-y-6">
-                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl tracking-tight text-gray-900 leading-tight font-black font-lemon">
                     What Our Users Say
-                </h2>
+                </h1>
                 <p className="text-gray-600 text-md sm:text-lg">
                     Join thousands of students and professionals who trust <span className="font-black">PREP<span className="text-green-600">IT</span></span> to achieve top results in their exams.
                 </p>

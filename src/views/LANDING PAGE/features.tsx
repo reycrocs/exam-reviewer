@@ -4,12 +4,14 @@ export default function Features() {
     return (
         <section id="features" className="flex flex-col items-center w-full px-6 py-20 bg-white">
             <div className="w-full max-w-6xl text-center space-y-12">
-                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
-                    Why Choose <span className="font-black">PREP<span className="text-green-600">IT</span></span>?
-                </h2>
-                <p className="text-gray-600 text-md sm:text-lg mx-auto mt-2">
-                    Trusted by thousands for smarter, faster, and more effective exam preparation. <span className="font-black">PREP<span className="text-green-600">IT</span></span> helps you build confidence and excel with interactive flashcards and real exam simulations.
-                </p>
+                <div className="text-center space-y-6">
+                    <h1 className="text-2xl sm:text-3xl lg:text-4xl tracking-tight text-gray-900 leading-tight font-black font-lemon">
+                        Why Choose <span className="font-black">PREP<span className="text-green-600">IT</span></span>?
+                    </h1>
+                    <p className="text-gray-600 text-md sm:text-lg mx-auto mt-2">
+                        Trusted by thousands for smarter, faster, and more effective exam preparation. <span className="font-black">PREP<span className="text-green-600">IT</span></span> helps you build confidence and excel with interactive flashcards and real exam simulations.
+                    </p>
+                </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div className="border rounded-2xl p-8 flex flex-col items-center text-center transition-all bg-gray-50">

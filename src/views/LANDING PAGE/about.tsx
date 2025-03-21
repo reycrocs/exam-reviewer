@@ -2,9 +2,9 @@ export default function About() {
     return (
         <section id="about" className="flex flex-col items-center px-6 py-20 bg-gray-50 space-y-12">
             <div className="w-full max-w-4xl text-center space-y-6">
-                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl tracking-tight text-gray-900 leading-tight font-black font-lemon">
                     What is <span className="font-black">PREP<span className="text-green-600">IT</span></span>?
-                </h2>
+                </h1>
                 <p className="text-gray-600 text-md sm:text-lg">
                     A dynamic platform designed to help you <span className="font-black">P</span>repare, <span className="font-black">R</span>eview, <span className="font-black">E</span>xcel, and <span className="font-black">P</span>ass your <span className="font-black text-green-600">IT</span>-related exams and certifications with confidence. Whether you are a student or a working professional, PREPIT provides interactive tools, real exam simulations, and expertly curated content to ensure you stay focused, motivated, and fully equipped to succeed.
                 </p>
