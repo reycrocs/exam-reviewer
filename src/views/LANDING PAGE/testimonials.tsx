@@ -27,7 +27,7 @@ export default function Testimonials() {
                         image: "https://media.licdn.com/dms/image/v2/C5603AQE3F3THqDG5mg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1603868207304?e=2147483647&v=beta&t=sC7FORNXLtKvqQn637iLjpMOPAj51hcewGqoisHh3SU",
                     },
                     {
-                        quote: "What I love about PREPIT is how real the past exam questions feel. It truly boosted my confidence before the actual exam.",
+                        quote: "What I love about PREPIT is how authentic the past exam questions are. It helped me secure a Silver rank in the Philippines and a Bronze overall!",
                         name: "Brayl James A.",
                         role: "ITPEC IP Passer - TOP NOTCHER",
                         image: "https://refreco.vercel.app/brayl_dev.jpg",
