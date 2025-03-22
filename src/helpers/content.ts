@@ -8,7 +8,7 @@ export const testimony = [{
 },
 {
     id: 2,
-    quote: "PREPIT made studying so much easier! The flashcards and exam simulations helped me pass my certification on the first try.",
+    quote: "PREPIT made studying so much easier! The flashcards and exam simulations helped me pass my certification on the first try. UC NUMBAWAN!! URA!!",
     name: "Jasper Eldrich B.",
     role: "ITPEC IP Passer",
     image: "https://media.licdn.com/dms/image/v2/D5603AQH_vE8Fr-cEaA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1712771545461?e=2147483647&v=beta&t=oWaPwOQaJuzqqTo48X5V0eDMqxJrl7t_ZMzVFE4qhDE",

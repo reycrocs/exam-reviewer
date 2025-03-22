@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../store/store";
+import { toggleAutoSubmit } from "../../store/flashcardSlice";
 import { Settings } from "lucide-react"; // Import cog icon
 import CustomButton from "../Common/Components/CustomButton";
 
@@ -7,7 +10,11 @@ interface TopBarProps {
 }
 
 export const TopBarWEB002: React.FC<TopBarProps> = ({ onExit }) => {
-  const [autoSubmit, setAutoSubmit] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const autoSubmit = useSelector((state: RootState) => state.flashcard.enabled);
+  const correctCount = useSelector((state: RootState) => state.flashcard.correctCount);
+  const wrongCount = useSelector((state: RootState) => state.flashcard.wrongCount);
+  const skippedCount = useSelector((state: RootState) => state.flashcard.skippedCount);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   return (
@@ -24,9 +31,9 @@ export const TopBarWEB002: React.FC<TopBarProps> = ({ onExit }) => {
         <div className="flex items-center space-x-4 text-sm sm:text-md font-regular 
           md:absolute md:left-1/2 md:transform md:-translate-x-1/2 
           md:justify-center justify-start w-full md:w-auto">
-          <div>Correct: 999</div>
-          <div>Wrong: 999</div>
-          <div>Skipped: 999</div>
+          <div>Correct: {correctCount}</div>
+          <div>Wrong: {wrongCount}</div>
+          <div>Skipped: {skippedCount}</div>
         </div>
 
         {/* Desktop View - Auto Submit Toggle & Exit Button */}
@@ -38,7 +45,7 @@ export const TopBarWEB002: React.FC<TopBarProps> = ({ onExit }) => {
               <input
                 type="checkbox"
                 checked={autoSubmit}
-                onChange={() => setAutoSubmit(!autoSubmit)}
+                onChange={() => dispatch(toggleAutoSubmit())}
                 className="sr-only peer"
               />
               <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 
@@ -74,7 +81,7 @@ export const TopBarWEB002: React.FC<TopBarProps> = ({ onExit }) => {
                 <input
                   type="checkbox"
                   checked={autoSubmit}
-                  onChange={() => setAutoSubmit(!autoSubmit)}
+                  onChange={() => dispatch(toggleAutoSubmit())}
                   className="sr-only peer"
                 />
                 <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 
