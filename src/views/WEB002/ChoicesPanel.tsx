@@ -73,7 +73,7 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLengt
         <div className="container mx-auto max-w-4xl px-4">
           <div className="overflow-x-auto whitespace-nowrap scrollbar-hide flex justify-center items-center space-x-2">
             {choices.map((choice) => {
-              const isCorrect = choice === correctAnswer;
+              const isCorrect = choice === correctAnswer.toLowerCase().trim();
               const isSelected = choice === selectedChoice;
 
               let bgColor = "bg-gray-400 sm:hover:bg-gray-600 text-white";
