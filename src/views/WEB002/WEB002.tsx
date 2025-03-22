@@ -1,5 +1,4 @@
 import CustomButton from "../Common/Components/CustomButton";
-import Instructions from "../Common/Components/Instructions";
 import { useNavigate } from "react-router-dom";
 import { TopBarWEB002 } from "./TopBarWEB002";
 import { useState } from "react";
