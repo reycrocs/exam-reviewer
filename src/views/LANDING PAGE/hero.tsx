@@ -57,7 +57,7 @@ export default function Hero() {
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
                     <CustomButton text="Start Demo" onClick={() => navigate("/web001")} />
                     <span className="text-gray-500 text-sm sm:text-base">or</span>
-                    <CustomButton text="Try Flashcards" pill="New" onClick={() => console.log("Try Flashcards clicked")} />
+                    <CustomButton text="Try Flashcards" pill="New" onClick={() => navigate("/web002")} />
                 </div>
             </div>
 
