@@ -94,28 +94,27 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLengt
         )}
       </div>
 
-      <div className="mt-auto w-full bg-white shadow-lg py-4 border-t">
+      <div className="mt-auto w-full bg-white shadow-lg py-4 border-t relative"> 
         <div className="container mx-auto max-w-4xl px-4">
-          <div className="overflow-x-auto whitespace-nowrap scrollbar-hide flex justify-center items-center space-x-2">
+          <div className="flex justify-center items-center space-x-2"> 
             {choices.map((choice) => {
               const isCorrect = choice === correctAnswer.toUpperCase().trim();
               const isSelected = choice === selectedChoice;
 
               let bgColor = "bg-gray-400 sm:hover:bg-gray-600 text-white";
               if (isSelected && isSubmitted) {
-                bgColor = isCorrect ? "bg-green-500" : "bg-red-500";
+                bgColor = isCorrect ? "bg-green-500 text-white animate-pulse" : "bg-red-500";
               }
               if (!isSelected && selectedChoice && isCorrect && isSubmitted) {
-                bgColor = "bg-green-500";
+                bgColor = "bg-green-500 animate-bounce text-white"; // Increased z-index
               }
 
               return (
                 <button
                   key={choice}
                   className={`flex items-center justify-center w-10 h-10 rounded-md
-                      text-xs sm:text-sm font-semibold transition duration-300 ease-in-out ${bgColor} ${
-                    isSelected && !isSubmitted ? "border-4 border-gray-500 bg-gray-700" : ""
-                  }`}
+                      text-xs sm:text-sm font-semibold transition duration-300 ease-in-out ${bgColor} 
+                      ${isSelected && !isSubmitted ? "border-4 border-gray-500 bg-gray-700" : ""}`}
                   onClick={() => handleSelect(choice)}
                   disabled={isSubmitted}
                 >
