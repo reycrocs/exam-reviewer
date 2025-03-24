@@ -24,13 +24,6 @@ const App: React.FC = () => {
       }
     };
 
-    // **Prevent Back Button Navigation**
-    history.pushState(null, "", window.location.href);
-    window.onpopstate = () => {
-      history.pushState(null, "", window.location.href);
-      alert("Back button is disabled!");
-    };
-
     document.addEventListener("contextmenu", disableRightClick);
     document.addEventListener("keydown", disableDevToolsShortcuts);
 

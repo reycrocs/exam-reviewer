@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store/store";
 import { incrementCorrect, incrementWrong } from "../../store/flashcardSlice";
 import CustomButton from "../Common/Components/CustomButton";
-import confetti from "canvas-confetti"; // 🎉 Import confetti
+import confetti from "canvas-confetti";
 
 interface ChoicesPanelProps {
   correctAnswer: string;
@@ -11,15 +11,23 @@ interface ChoicesPanelProps {
   totalAnsweredQuestion: number;
   totalQuestions: number;
   onNext: () => void;
-  onSkip: () => void; // NEW PROP 🚀
+  onSkip: () => void;
 }
 
 const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLength, totalAnsweredQuestion, totalQuestions, onNext, onSkip }) => {
   const dispatch = useDispatch();
   const autoSubmit = useSelector((state: RootState) => state.flashcard.enabled);
-  const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const [hasChecked, setHasChecked] = useState<boolean>(false); // Prevents multiple checks
+  
+  // Load initial values from localStorage
+  const [selectedChoice, setSelectedChoice] = useState<string | null>(() => {
+    return localStorage.getItem('selectedChoice') || null;
+  });
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(() => {
+    return localStorage.getItem('isSubmitted') === "true";
+  });
+  const [hasChecked, setHasChecked] = useState<boolean>(() => {
+    return localStorage.getItem('hasChecked') === "true";
+  });
 
   const choices = Array.from({ length: choicesLength }, (_, i) => String.fromCharCode(65 + i));
 
@@ -71,6 +79,11 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLengt
     setSelectedChoice(null);
     setIsSubmitted(false);
     setHasChecked(false);
+
+    // Clear localStorage keys related to this state
+    localStorage.removeItem('selectedChoice');
+    localStorage.removeItem('isSubmitted');
+    localStorage.removeItem('hasChecked');
   };
 
   useEffect(() => {
@@ -78,6 +91,13 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLengt
       handleSubmit();
     }
   }, [selectedChoice, autoSubmit]);
+
+  // Persist to localStorage when state changes
+  useEffect(() => {
+    localStorage.setItem('selectedChoice', selectedChoice ?? "");
+    localStorage.setItem('isSubmitted', isSubmitted.toString());
+    localStorage.setItem('hasChecked', hasChecked.toString());
+  }, [selectedChoice, isSubmitted, hasChecked]);
 
   return (
     <div className="fixed bottom-0 w-full flex flex-col">

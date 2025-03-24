@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { mockData } from "../views/WEB002/MockData";
+import { loadState } from "./helpers/localStorage";
+import { saveState } from "./helpers/localStorage";
 
 interface FlashcardState {
   enabled: boolean;
@@ -15,7 +17,7 @@ interface FlashcardState {
   skippedQuestions: number[];
 }
 
-const initialState: FlashcardState = {
+const defaultState: FlashcardState = {
   enabled: false,
   ended: false,
   tryAgain: false,
@@ -28,6 +30,8 @@ const initialState: FlashcardState = {
   totalQuestions: mockData.length,
   skippedQuestions: [],
 };
+
+const initialState: FlashcardState = loadState() || defaultState;
 
 // Helper function to move to the next question
 const getNextQuestionIndex = (state: FlashcardState) => {
@@ -59,54 +63,59 @@ const FlashcardSlice = createSlice({
   reducers: {
     toggleAutoSubmit: (state) => {
       state.enabled = !state.enabled;
+      saveState(state);
     },
     toggleEnded: (state) => {
       state.ended = !state.ended;
+      saveState(state);
     },
     toggleTryAgain: (state) => {
       state.tryAgain = !state.tryAgain;
+      saveState(state);
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
+      saveState(state);
     },
     setAutoSubmit: (state, action: PayloadAction<boolean>) => {
       state.enabled = action.payload;
+      saveState(state);
     },
     incrementCorrect: (state) => {
-      state.isLoading = true;
       state.correctCount += 1;
       state.skippedQuestions = state.skippedQuestions.filter(q => q !== state.currentQuestionIndex);
       state.skippedCount = state.skippedQuestions.length;
-      state.isLoading = false;
+      saveState(state);
     },
     incrementWrong: (state) => {
-      state.isLoading = true;
       state.wrongCount += 1;
       state.skippedQuestions = state.skippedQuestions.filter(q => q !== state.currentQuestionIndex);
       state.skippedCount = state.skippedQuestions.length;
-      state.isLoading = false;
+      saveState(state);
     },
     incrementSkipped: (state) => {
-      state.isLoading = true;
       if (!state.skippedQuestions.includes(state.currentQuestionIndex)) {
         state.skippedQuestions.push(state.currentQuestionIndex);
         state.skippedCount += 1;
       }
-      state.isLoading = false;
+      saveState(state);
     },
     resetCounts: (state) => {
-      state.correctCount = 0;
-      state.wrongCount = 0;
-      state.skippedCount = 0;
-      state.currentQuestionIndex = 0;
-      state.skippedQuestions = [];
-      state.ended = false;
-      state.tryAgain = false;
-      state.skippedOnly = false;
-      state.isLoading = true;
+      const preserveEnabled = state.enabled;
+      Object.assign(state, defaultState);
+      state.enabled = preserveEnabled;
+      
+      saveState(state);
+    
+      localStorage.removeItem('selectedChoice');
+      localStorage.removeItem('isSubmitted');
+      localStorage.removeItem('hasChecked');
+      localStorage.removeItem('shuffledQuestionData');
     },
+    
     setCurrentQuestionIndex: (state) => {
       state.currentQuestionIndex = getNextQuestionIndex(state);
+      saveState(state);
     },
   },
 });

@@ -10,6 +10,7 @@ import ChoicesPanel from "./ChoicesPanel";
 import { mockData } from "./MockData";
 import confetti from "canvas-confetti";
 import ExitOverlay from "./Exit";
+import { decryptData, encryptData } from "../../utils/encrypt";
 
 const shuffleArray = <T,>(array: T[]): T[] => {
     let shuffledArray = [...array]; // Create a copy to avoid mutating original data
@@ -20,7 +21,28 @@ const shuffleArray = <T,>(array: T[]): T[] => {
     return shuffledArray;
 };
 
-const shuffledData = shuffleArray(mockData);
+const getOrCreateQuestionData = () => {
+    const encryptedData = localStorage.getItem("shuffledQuestionData");
+
+    if (encryptedData) {
+        try {
+            const decrypted = decryptData(encryptedData);
+            return decrypted;
+        } catch (e) {
+            console.error('Decryption failed, clearing invalid data:', e);
+            localStorage.removeItem("shuffledQuestionData");
+            return null;
+        }
+    } else {
+        const shuffled = shuffleArray(mockData);
+        const encrypted = encryptData(shuffled);
+        localStorage.setItem("shuffledQuestionData", encrypted); // store as string
+        return shuffled;
+    }
+};
+
+
+
 
 export default function WEB002() {
     const dispatch = useDispatch();
@@ -83,6 +105,8 @@ export default function WEB002() {
         }, duration); // Wait for fireworks to complete
     };
 
+    const shuffledData = getOrCreateQuestionData();
+
     const questionData = {
         ...shuffledData[currentQuestionIndex],
         isSkipped: skippedQuestions.includes(currentQuestionIndex),
@@ -126,7 +150,7 @@ export default function WEB002() {
 
                 <img
                     className={`mx-auto w-full ${isLoading ? "opacity-0" : "opacity-100"}`}
-                    src={`https://it-exam-reviewer.vercel.app/aaea4d7e-8026-482f-9f2e-3ccdb5b72136/b536ff88-a313-4ff7-8983-f20f9203a67e/${questionData.img}`}
+                    src={`${questionData.img}`}
                     alt="question"
                     onLoad={() => dispatch(setLoading(false))}
                 />
