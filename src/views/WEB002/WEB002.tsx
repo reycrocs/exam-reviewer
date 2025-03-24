@@ -36,13 +36,10 @@ const getOrCreateQuestionData = () => {
     } else {
         const shuffled = shuffleArray(mockData);
         const encrypted = encryptData(shuffled);
-        localStorage.setItem("shuffledQuestionData", encrypted); // store as string
+        localStorage.setItem("shuffledQuestionData", encrypted);
         return shuffled;
     }
 };
-
-
-
 
 export default function WEB002() {
     const dispatch = useDispatch();
@@ -50,7 +47,6 @@ export default function WEB002() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalType, setModalType] = useState("");
     
-    // Using Redux state for current question index and skipped questions
     const currentQuestionIndex = useSelector((state: RootState) => state.flashcard.currentQuestionIndex);
     const skippedQuestions = useSelector((state: RootState) => state.flashcard.skippedQuestions);
     const correctCount = useSelector((state: RootState) => state.flashcard.correctCount);
@@ -102,7 +98,7 @@ export default function WEB002() {
         
         setTimeout(() => {
             dispatch(toggleTryAgain());
-        }, duration); // Wait for fireworks to complete
+        }, duration);
     };
 
     const shuffledData = getOrCreateQuestionData();
@@ -110,7 +106,7 @@ export default function WEB002() {
     const questionData = {
         ...shuffledData[currentQuestionIndex],
         isSkipped: skippedQuestions.includes(currentQuestionIndex),
-        isAnswered: correctCount + wrongCount > 0,  // Use correctCount + wrongCount to check if answered
+        isAnswered: correctCount + wrongCount > 0,  
     };
 
     const handleOpenModal = (type: string) => {
@@ -150,7 +146,7 @@ export default function WEB002() {
 
                 <img
                     className={`mx-auto w-full ${isLoading ? "opacity-0" : "opacity-100"}`}
-                    src={`${questionData.img}`}
+                    src={`/q/qdata/${questionData.img}`}
                     alt="question"
                     onLoad={() => dispatch(setLoading(false))}
                 />
