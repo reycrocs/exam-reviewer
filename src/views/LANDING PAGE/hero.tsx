@@ -1,7 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Settings, Database, Cpu, Code2, Network, Layers, ShieldCheck, Repeat} from "lucide-react";
+import { BookOpen, Settings, Database, Cpu, Code2, Network, Layers, ShieldCheck, Repeat } from "lucide-react";
 import CustomButton from "../Common/Components/CustomButton";
+import { exam2024S_FE_AM, exam2024A_FE_AM, exam2023S_FE_AM } from "../../exams/exam";
 
 const topics = [
     { title: "Problem Solving & Logical Thinking", icon: <Settings size={40} className="text-green-600" /> },
@@ -16,9 +17,33 @@ const topics = [
     { title: "Software Development", icon: <Code2 size={40} className="text-green-600" /> },
 ];
 
+const examOptions: Record<string, any[]> = {
+    "2024S_FE_AM": exam2024S_FE_AM,
+    "2024A_FE_AM": exam2024A_FE_AM,
+    "2023S_FE_AM": exam2023S_FE_AM,
+};
+
 export default function Hero() {
     const navigate = useNavigate();
     const marqueeRef = useRef<HTMLDivElement>(null);
+    const [showModal, setShowModal] = useState(false);
+    const [selectedExams, setSelectedExams] = useState<string[]>([]);
+
+    const toggleExam = (exam: string) => {
+        setSelectedExams(prev =>
+            prev.includes(exam)
+                ? prev.filter(e => e !== exam)
+                : [...prev, exam]
+        );
+    };
+
+    const handleProceed = () => {
+        const selectedQuestions = selectedExams.flatMap((exam) => examOptions[exam]);
+        console.log(selectedQuestions);
+        localStorage.setItem('selectedQuestions', JSON.stringify(selectedQuestions));
+        setShowModal(false);
+        navigate("/web002");
+    };
 
     useEffect(() => {
         const marquee = marqueeRef.current;
@@ -45,7 +70,7 @@ export default function Hero() {
     }, []);
 
     return (
-        <section className="flex flex-col items-center min-h-screen justify-center px-6 py-24 sm:py-32">
+        <section className="flex flex-col items-center min-h-screen justify-center px-6 py-24 sm:py-32 relative">
             {/* Hero Section */}
             <div className="w-full max-w-4xl text-center space-y-8">
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl tracking-tight text-gray-900 leading-tight font-black font-lemon">
@@ -57,7 +82,7 @@ export default function Hero() {
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
                     <CustomButton text="Start Demo" onClick={() => navigate("/web001")} />
                     <span className="text-gray-500 text-sm sm:text-base">or</span>
-                    <CustomButton text="Try Flashcards" pill="New" onClick={() => navigate("/web002")} />
+                    <CustomButton text="Try Flashcards" pill="New" onClick={() => setShowModal(true)} />
                 </div>
             </div>
 
@@ -84,6 +109,41 @@ export default function Hero() {
                     ))}
                 </div>
             </div>
+
+            {showModal && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                    <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-80">
+                        <div className="flex flex-col items-center text-center">
+                            <h2 className="text-lg font-semibold">Select Exams</h2>
+                            <div className="mt-4 space-y-2">
+                                {Object.keys(examOptions).map((exam) => (
+                                    <label key={exam} className="flex items-center gap-3">
+                                        <input
+                                            type="checkbox"
+                                            checked={selectedExams.includes(exam)}
+                                            onChange={() => toggleExam(exam)}
+                                            className="form-checkbox text-green-500 accent-green-500"
+                                        />
+                                        <span className="capitalize text-sm">{exam.replace(/_/g, ' ')}</span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="mt-6 flex justify-end space-x-3">
+                            <CustomButton
+                                text="Cancel"
+                                className="bg-gray-700 text-white hover:bg-gray-600"
+                                onClick={() => setShowModal(false)}
+                            />
+                            <CustomButton
+                                text="Proceed"
+                                className="bg-green-600 hover:bg-green-700 text-white"
+                                onClick={handleProceed}
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
         </section>
     );
 }

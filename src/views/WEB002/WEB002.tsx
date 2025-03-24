@@ -1,4 +1,4 @@
-import { LoaderCircle } from "lucide-react";
+import { AlertCircle, LoaderCircle } from "lucide-react";
 import CustomButton from "../Common/Components/CustomButton";
 import { useNavigate } from "react-router-dom";
 import { TopBarWEB002 } from "./TopBarWEB002";
@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { incrementSkipped, resetCounts, setCurrentQuestionIndex, setLoading, toggleEnded, toggleTryAgain } from "../../store/flashcardSlice";
 import { useEffect, useState } from "react";
 import ChoicesPanel from "./ChoicesPanel";
-import { mockData } from "./MockData";
 import confetti from "canvas-confetti";
 import ExitOverlay from "./Exit";
 import { decryptData, encryptData } from "../../utils/encrypt";
@@ -21,7 +20,7 @@ const shuffleArray = <T,>(array: T[]): T[] => {
     return shuffledArray;
 };
 
-const getOrCreateQuestionData = () => {
+const getOrCreateQuestionData = (data: any) => {
     const encryptedData = localStorage.getItem("shuffledQuestionData");
 
     if (encryptedData) {
@@ -34,7 +33,7 @@ const getOrCreateQuestionData = () => {
             return null;
         }
     } else {
-        const shuffled = shuffleArray(mockData);
+        const shuffled = shuffleArray(data);
         const encrypted = encryptData(shuffled);
         localStorage.setItem("shuffledQuestionData", encrypted);
         return shuffled;
@@ -54,6 +53,7 @@ export default function WEB002() {
     const totalQuestions = useSelector((state: RootState) => state.flashcard.totalQuestions);
     const ended = useSelector((state: RootState) => state.flashcard.ended);
     const isLoading = useSelector((state: RootState) => state.flashcard.isLoading);
+    const [error, setError] = useState(false);
     
     const totalAnswered = correctCount + wrongCount;
     const allQuestionsAnswered = totalAnswered === totalQuestions;
@@ -101,7 +101,16 @@ export default function WEB002() {
         }, duration);
     };
 
-    const shuffledData = getOrCreateQuestionData();
+    const data = localStorage.getItem("selectedQuestions");
+
+    if (data === null) {
+        alert("please select questions first");
+        navigate('/');
+        return null;
+    }
+
+    const parsedData = JSON.parse(data);
+    const shuffledData = getOrCreateQuestionData(parsedData);
 
     const questionData = {
         ...shuffledData[currentQuestionIndex],
@@ -139,16 +148,36 @@ export default function WEB002() {
             <TopBarWEB002 onExit={() => handleOpenModal("exit")} />
             <div className="container mx-auto max-w-4xl px-4 pt-5 sm:pt-10 flex flex-col items-center mb-32">
                 {isLoading && (
-                    <div className="flex justify-center items-center mt-[20vh]">
+                    <div className="flex flex-col gap-10 text-center justify-center items-center mt-[20vh]">
                         <LoaderCircle className="w-16 h-16 text-green-600 animate-spin" />
+                        <p className="animate-pulse">
+                            Loading questions, please wait... <br />
+                            If this takes too long, try refreshing the page.
+                        </p>
+                    </div>
+                )}
+
+                {!isLoading && error && (
+                    <div className="flex flex-col gap-6 text-center justify-center items-center mt-[20vh]">
+                        <AlertCircle className="w-14 h-14 text-gray-400" />
+                        <p className="text-gray-600 leading-relaxed">
+                            Connection is slow or the image failed to load. <br />
+                            Please try refreshing the page.
+                        </p>
+                        <CustomButton
+                            text="Refresh Page"
+                            onClick={() => window.location.reload()}
+                            className="bg-green-600 text-white hover:bg-green-700"
+                        />
                     </div>
                 )}
 
                 <img
-                    className={`mx-auto w-full ${isLoading ? "opacity-0" : "opacity-100"}`}
+                    className={`mx-auto w-full ${isLoading || error ? "opacity-0" : "opacity-100"}`}
                     src={`/q/qdata/${questionData.img}`}
                     alt="question"
                     onLoad={() => dispatch(setLoading(false))}
+                    onError={() => setError(true)}
                 />
             </div>
 
