@@ -201,8 +201,11 @@ export default function Hero() {
                             />
                             <CustomButton
                                 text="Start"
-                                className="bg-green-600 hover:bg-green-700 text-white"
+                                className={`bg-green-600 hover:bg-green-700 text-white ${
+                                    selectedExams.length === 0 ? "opacity-50 cursor-not-allowed" : ""
+                                }`}
                                 onClick={handleProceed}
+                                disabled={selectedExams.length === 0}
                             />
                         </div>
                     </div>
