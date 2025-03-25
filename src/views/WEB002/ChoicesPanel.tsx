@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store/store";
-import { incrementCorrect, incrementWrong, toggleEnded, toggleTryAgain } from "../../store/flashcardSlice";
+import { incrementCorrect, incrementWrong, setIsSkipping, toggleEnded, toggleTryAgain } from "../../store/flashcardSlice";
 import CustomButton from "../Common/Components/CustomButton";
 import confetti from "canvas-confetti";
 
@@ -17,6 +17,7 @@ interface ChoicesPanelProps {
 const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLength, totalAnsweredQuestion, totalQuestions, onNext, onSkip }) => {
   const dispatch = useDispatch();
   const autoSubmit = useSelector((state: RootState) => state.flashcard.enabled);
+  const isSkipping = useSelector((state: RootState) => state.flashcard.isSkipping);
   const allQuestionsAnswered = totalAnsweredQuestion === totalQuestions;
   
   // Load initial values from localStorage
@@ -76,6 +77,9 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLengt
   };
 
   const handleSkip = () => {
+    if (isSkipping) return;
+    dispatch(setIsSkipping(true)); // Disable button
+    setTimeout(() => dispatch(setIsSkipping(false)), 200); // Re-enable after 500ms
     onSkip();
     resetState();
   };
@@ -151,7 +155,8 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLengt
           <CustomButton text="Next" className="bg-gray-700 text-white hover:bg-gray-600" onClick={handleNext} />
         ) : (
           !isLast && (
-            <CustomButton text="Skip" className="bg-gray-700 text-white hover:bg-gray-600" onClick={handleSkip} />
+            //<CustomButton text="Skip" className={`bg-gray-700 text-white hover:bg-gray-600 ${isSkipping && 'opacity-50 animate-pulse cursor-not-allowed'}`} onClick={handleSkip} />
+            <CustomButton text="Skip" className={`bg-gray-700 text-white hover:bg-gray-600`} onClick={handleSkip} />
           )
         )}
       </div>

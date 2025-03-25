@@ -5,6 +5,7 @@ interface FlashcardState {
   enabled: boolean;
   ended: boolean;
   tryAgain: boolean;
+  isSkipping: boolean;
   skippedOnly: boolean;
   isLoading: boolean;
   correctCount: number;
@@ -20,6 +21,7 @@ const defaultState: FlashcardState = {
   ended: false,
   tryAgain: false,
   skippedOnly: false,
+  isSkipping: false,
   isLoading: true,
   correctCount: 0,
   wrongCount: 0,
@@ -73,6 +75,10 @@ const FlashcardSlice = createSlice({
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
+      saveState(state);
+    },
+    setIsSkipping: (state, action: PayloadAction<boolean>) => {
+      state.isSkipping = action.payload;
       saveState(state);
     },
     setAutoSubmit: (state, action: PayloadAction<boolean>) => {
@@ -142,6 +148,7 @@ export const {
   setAutoSubmit,
   setTotalQuestion,
   setLoading,
+  setIsSkipping,
   incrementCorrect,
   incrementWrong,
   incrementSkipped,

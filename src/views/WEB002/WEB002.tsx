@@ -79,6 +79,12 @@ export default function WEB002() {
         isAnswered: totalAnswered > 0,
     };
 
+    const q = questionData.img.split(/_/);
+    
+    if (isLoading) {
+        console.log(questionData.img);
+    }
+    
     const handleOpenModal = (type: string) => {
         setModalType(type);
         setIsModalOpen(true);
@@ -133,7 +139,8 @@ export default function WEB002() {
 
                 <img
                     className={`mx-auto w-full ${isLoading || error ? "opacity-0" : "opacity-100"}`}
-                    src={`/q/qdata/${questionData.img}`}
+                    //src={`/q/qdata/${questionData.img}`}
+                    src={`/q/${q[1]}/${q[2]}/${q[0]}/${questionData.img}`}
                     alt="question"
                     onLoad={() => dispatch(setLoading(false))}
                     onError={() => setError(true)}
