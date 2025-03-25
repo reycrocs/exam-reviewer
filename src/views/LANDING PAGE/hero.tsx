@@ -2,10 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BookOpen, Settings, Database, Cpu, Code2, Network, Layers, ShieldCheck, Repeat } from "lucide-react";
 import CustomButton from "../Common/Components/CustomButton";
-import { exam2024S_FE_AM, exam2024A_FE_AM, exam2023S_FE_AM } from "../../exams/exam";
+//import { exam2024S_FE_AM, exam2024A_FE_AM, exam2023S_FE_AM } from "../../exams/exam";
+//import { encrypted2023S_FE_AM, encrypted2024A_FE_AM, encrypted2024S_FE_AM } from "../../exams/encryptedExam";
+import { exam2023S_FE_AM } from "../../encryptedExams/2023S_FE_AM";
+import { exam2024A_FE_AM } from "../../encryptedExams/2024A_FE_AM";
+import { exam2024S_FE_AM } from "../../encryptedExams/2024S_FE_AM";
 import { useDispatch } from "react-redux";
 import { resetCounts, setTotalQuestion } from "../../store/flashcardSlice";
-import { encryptData } from "../../utils/encrypt";
+import { encryptData, decryptData } from "../../utils/encrypt";
 
 const topics = [
     { title: "Problem Solving & Logical Thinking", icon: <Settings size={40} className="text-green-600" /> },
@@ -20,10 +24,16 @@ const topics = [
     { title: "Software Development", icon: <Code2 size={40} className="text-green-600" /> },
 ];
 
+// const examOptions: Record<string, any[]> = {
+//     "2024S_FE_AM": exam2024S_FE_AM,
+//     "2024A_FE_AM": exam2024A_FE_AM,
+//     "2023S_FE_AM": exam2023S_FE_AM,
+// };
+
 const examOptions: Record<string, any[]> = {
-    "2024S_FE_AM": exam2024S_FE_AM,
-    "2024A_FE_AM": exam2024A_FE_AM,
-    "2023S_FE_AM": exam2023S_FE_AM,
+    "2024S_FE_AM": JSON.parse(decryptData(exam2024S_FE_AM)),
+    "2024A_FE_AM": JSON.parse(decryptData(exam2024A_FE_AM)),
+    "2023S_FE_AM": JSON.parse(decryptData(exam2023S_FE_AM)),
 };
 
 export default function Hero() {
@@ -64,8 +74,8 @@ export default function Hero() {
     
         const selectedQuestions = selectedExams.flatMap((exam) => examOptions[exam]);
         const jsonString = JSON.stringify(selectedQuestions); // Convert to JSON string before encrypting
-        const encryptedData = encryptData(jsonString); 
-    
+        const encryptedData = encryptData(jsonString);
+        //console.log(encryptedData);
         localStorage.setItem("selectedQuestions", encryptedData);
         dispatch(setTotalQuestion(selectedQuestions.length));
         setShowModal(false);
