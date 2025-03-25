@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { BookOpen, Settings, Database, Cpu, Code2, Network, Layers, ShieldCheck, Repeat } from "lucide-react";
 import CustomButton from "../Common/Components/CustomButton";
 
+// import { exam2022A_FE_AM } from "../../exams/2022A_FE_AM";
+// import { exam2022S_FE_AM } from "../../exams/2022S_FE_AM";
+
 // import { exam2023A_FE_AM } from "../../exams/2023A_FE_AM";
 // import { exam2023S_FE_AM } from "../../exams/2023S_FE_AM";
 
@@ -10,6 +13,9 @@ import CustomButton from "../Common/Components/CustomButton";
 // import { exam2024S_FE_AM } from "../../exams/2024S_FE_AM";
 
 ///////////////////////
+
+import { exam2022A_FE_AM } from "../../encryptedExams/2022A_FE_AM";
+import { exam2022S_FE_AM } from "../../encryptedExams/2022S_FE_AM";
 
 import { exam2023A_FE_AM } from "../../encryptedExams/2023A_FE_AM";
 import { exam2023S_FE_AM } from "../../encryptedExams/2023S_FE_AM";
@@ -40,6 +46,9 @@ const topics = [
 
 //     "2023S_FE_AM": exam2023S_FE_AM,
 //     "2023A_FE_AM": exam2023A_FE_AM,
+
+//     "2022S_FE_AM": exam2022S_FE_AM,
+//     "2022A_FE_AM": exam2022A_FE_AM,
 // };
 
 const examOptions: Record<string, any[]> = {
@@ -48,6 +57,9 @@ const examOptions: Record<string, any[]> = {
 
     "2023S_FE_AM": JSON.parse(decryptData(exam2023S_FE_AM)),
     "2023A_FE_AM": JSON.parse(decryptData(exam2023A_FE_AM)),
+
+    "2022S_FE_AM": JSON.parse(decryptData(exam2022S_FE_AM)),
+    "2022A_FE_AM": JSON.parse(decryptData(exam2022A_FE_AM)),
 };
 
 export default function Hero() {
@@ -88,11 +100,11 @@ export default function Hero() {
     
         const selectedQuestions = selectedExams.flatMap((exam) => examOptions[exam]);
         const jsonString = JSON.stringify(selectedQuestions); // Convert to JSON string before encrypting
-        // console.log("RAW DATA");
-        // console.log(jsonString);
+        console.log("RAW DATA");
+        console.log(jsonString);
         const encryptedData = encryptData(jsonString);
-        // console.log("ENCRYPTED:");
-        // console.log(encryptedData);
+        console.log("ENCRYPTED:");
+        console.log(encryptedData);
         localStorage.setItem("selectedQuestions", encryptedData);
         dispatch(setTotalQuestion(selectedQuestions.length));
         setShowModal(false);
