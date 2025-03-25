@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
-import { resetCounts, toggleEnded } from "../../store/flashcardSlice";
+import { resetFlashcards, toggleEnded } from "../../store/flashcardSlice";
 import { RootState } from "../../store/store";
+import CustomButton from "../Common/Components/CustomButton";
 
 const ExitOverlay = () => {
     const dispatch = useDispatch();
@@ -10,8 +11,8 @@ const ExitOverlay = () => {
     const total = useSelector((state: RootState) => state.flashcard.totalQuestions);
 
     const tryAgain = () => {
-        dispatch(toggleEnded());
-        dispatch(resetCounts());
+        dispatch(toggleEnded(false));
+        dispatch(resetFlashcards());
     };
 
     // Calculate the percentage score
@@ -41,15 +42,15 @@ const ExitOverlay = () => {
 
     return (
         <div className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 backdrop-blur-md px-4">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white animate-bounce text-center">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white animate-bounce text-center">
                 🎉 Congratulations! 🎉
             </h1>
 
             {/* Dynamic Score Message */}
-            <p className="mt-4 text-center text-white text-lg sm:text-xl md:text-2xl">{scoreMessage}</p>
+            <p className="mt-4 text-center text-white text-sm sm:text-md md:text-lg">{scoreMessage}</p>
 
             {/* Score Display */}
-            <div className="mt-4 text-center text-white text-lg sm:text-xl md:text-2xl space-y-2">
+            <div className="mt-4 mb-6 text-center text-white text-sm sm:text-md md:text-lg space-y-2">
                 <p className="mt-2">
                     Total Score: <span className="font-bold">{correct}/{total}</span> ({scorePercentage.toFixed(2)}%)
                 </p>
@@ -57,12 +58,7 @@ const ExitOverlay = () => {
 
             {/* Exit Button */}
             {showTryAgain && (
-                <button
-                    onClick={tryAgain}
-                    className="mt-6 px-4 py-2 sm:px-6 sm:py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-600 shadow-lg transition-all text-sm sm:text-base"
-                >
-                    Try Again
-                </button>
+                <CustomButton text="Try Again" onClick={tryAgain} />
             )}
         </div>
     );

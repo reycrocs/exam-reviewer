@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store/store";
-import { incrementCorrect, incrementWrong } from "../../store/flashcardSlice";
+import { incrementCorrect, incrementWrong, toggleEnded, toggleTryAgain } from "../../store/flashcardSlice";
 import CustomButton from "../Common/Components/CustomButton";
 import confetti from "canvas-confetti";
 
@@ -17,10 +17,11 @@ interface ChoicesPanelProps {
 const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLength, totalAnsweredQuestion, totalQuestions, onNext, onSkip }) => {
   const dispatch = useDispatch();
   const autoSubmit = useSelector((state: RootState) => state.flashcard.enabled);
+  const allQuestionsAnswered = totalAnsweredQuestion === totalQuestions;
   
   // Load initial values from localStorage
   const [selectedChoice, setSelectedChoice] = useState<string | null>(() => {
-    return localStorage.getItem('selectedChoice') || null;
+    return localStorage.getItem('selectedChoice') ?? null;
   });
   const [isSubmitted, setIsSubmitted] = useState<boolean>(() => {
     return localStorage.getItem('isSubmitted') === "true";
@@ -66,8 +67,12 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLengt
   };
 
   const handleNext = () => {
-    onNext();
-    resetState();
+    if (allQuestionsAnswered) {
+      triggerFireworks();
+    } else {
+      onNext();
+      resetState();
+    }
   };
 
   const handleSkip = () => {
@@ -84,6 +89,43 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLengt
     localStorage.removeItem('selectedChoice');
     localStorage.removeItem('isSubmitted');
     localStorage.removeItem('hasChecked');
+  };
+
+  const triggerFireworks = () => {
+    dispatch(toggleEnded(true));
+    
+    const duration = 5 * 1000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+    
+    function randomInRange(min: number, max: number) {
+        return Math.random() * (max - min) + min;
+    }
+    
+    const interval = setInterval(() => {
+        const timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) {
+            clearInterval(interval);
+        }
+    
+        const particleCount = 30 * (timeLeft / duration);
+    
+        confetti({
+            ...defaults,
+            particleCount,
+            origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+        });
+    
+        confetti({
+            ...defaults,
+            particleCount,
+            origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+        });
+    }, 250);
+    
+    setTimeout(() => {
+        dispatch(toggleTryAgain(true));
+    }, duration);
   };
 
   useEffect(() => {

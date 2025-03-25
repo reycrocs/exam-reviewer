@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { BookOpen, Settings, Database, Cpu, Code2, Network, Layers, ShieldCheck, Repeat } from "lucide-react";
 import CustomButton from "../Common/Components/CustomButton";
 import { exam2024S_FE_AM, exam2024A_FE_AM, exam2023S_FE_AM } from "../../exams/exam";
+import { useDispatch } from "react-redux";
+import { resetCounts, setTotalQuestion } from "../../store/flashcardSlice";
+import { encryptData } from "../../utils/encrypt";
 
 const topics = [
     { title: "Problem Solving & Logical Thinking", icon: <Settings size={40} className="text-green-600" /> },
@@ -25,8 +28,11 @@ const examOptions: Record<string, any[]> = {
 
 export default function Hero() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const marqueeRef = useRef<HTMLDivElement>(null);
     const [showModal, setShowModal] = useState(false);
+    const [continueModal, setContinueModal] = useState(false);
     const [selectedExams, setSelectedExams] = useState<string[]>([]);
 
     const toggleExam = (exam: string) => {
@@ -37,13 +43,35 @@ export default function Hero() {
         );
     };
 
+    const handleFlashcard = () => {
+        const shuffledData = localStorage.getItem("shuffledQuestionData");
+    
+        if (shuffledData) {
+            setContinueModal(true);
+        } else {
+            setShowModal(true);
+        }
+    };
+
+    const handleContinue = () => {
+        setContinueModal(false);
+        navigate("/web002");
+    };
+
     const handleProceed = () => {
+        localStorage.removeItem("shuffledQuestionData");
+        dispatch(resetCounts());
+    
         const selectedQuestions = selectedExams.flatMap((exam) => examOptions[exam]);
-        console.log(selectedQuestions);
-        localStorage.setItem('selectedQuestions', JSON.stringify(selectedQuestions));
+        const jsonString = JSON.stringify(selectedQuestions); // Convert to JSON string before encrypting
+        const encryptedData = encryptData(jsonString); 
+    
+        localStorage.setItem("selectedQuestions", encryptedData);
+        dispatch(setTotalQuestion(selectedQuestions.length));
         setShowModal(false);
         navigate("/web002");
     };
+    
 
     useEffect(() => {
         const marquee = marqueeRef.current;
@@ -82,7 +110,7 @@ export default function Hero() {
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
                     <CustomButton text="Start Demo" onClick={() => navigate("/web001")} />
                     <span className="text-gray-500 text-sm sm:text-base">or</span>
-                    <CustomButton text="Try Flashcards" pill="New" onClick={() => setShowModal(true)} />
+                    <CustomButton text="Try Flashcards" pill="New" onClick={handleFlashcard} />
                 </div>
             </div>
 
@@ -110,6 +138,32 @@ export default function Hero() {
                 </div>
             </div>
 
+            {continueModal && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                    <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-80">
+                        <div className="flex flex-col items-center text-center">
+                            <h2 className="text-lg font-semibold">Continue Flashcards</h2>
+                            <p className="mt-2">You have unfinished flashcards. Do you wish to continue?</p>
+                        </div>
+                        <div className="mt-6 flex justify-end space-x-3">
+                            <CustomButton
+                                text="Create New"
+                                className="bg-gray-700 text-white hover:bg-gray-600"
+                                onClick={() => {
+                                    setContinueModal(false);
+                                    setShowModal(true);
+                                }}
+                            />
+                            <CustomButton
+                                text="Continue"
+                                className="bg-green-600 hover:bg-green-700 text-white"
+                                onClick={handleContinue}
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {showModal && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                     <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-80">
@@ -136,7 +190,7 @@ export default function Hero() {
                                 onClick={() => setShowModal(false)}
                             />
                             <CustomButton
-                                text="Proceed"
+                                text="Start"
                                 className="bg-green-600 hover:bg-green-700 text-white"
                                 onClick={handleProceed}
                             />

@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { mockData } from "../views/WEB002/MockData";
-import { loadState } from "./helpers/localStorage";
-import { saveState } from "./helpers/localStorage";
+import { loadState, saveState } from "./helpers/localStorage";
 
 interface FlashcardState {
   enabled: boolean;
@@ -27,7 +25,7 @@ const defaultState: FlashcardState = {
   wrongCount: 0,
   skippedCount: 0,
   currentQuestionIndex: 0,
-  totalQuestions: mockData.length,
+  totalQuestions: 0,
   skippedQuestions: [],
 };
 
@@ -65,12 +63,12 @@ const FlashcardSlice = createSlice({
       state.enabled = !state.enabled;
       saveState(state);
     },
-    toggleEnded: (state) => {
-      state.ended = !state.ended;
+    toggleEnded: (state, action: PayloadAction<boolean>) => {
+      state.ended = action.payload;
       saveState(state);
     },
-    toggleTryAgain: (state) => {
-      state.tryAgain = !state.tryAgain;
+    toggleTryAgain: (state, action: PayloadAction<boolean>) => {
+      state.tryAgain = action.payload;
       saveState(state);
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
@@ -79,6 +77,10 @@ const FlashcardSlice = createSlice({
     },
     setAutoSubmit: (state, action: PayloadAction<boolean>) => {
       state.enabled = action.payload;
+      saveState(state);
+    },
+    setTotalQuestion: (state, action: PayloadAction<number>) => {
+      state.totalQuestions = action.payload;
       saveState(state);
     },
     incrementCorrect: (state) => {
@@ -112,7 +114,20 @@ const FlashcardSlice = createSlice({
       localStorage.removeItem('hasChecked');
       localStorage.removeItem('shuffledQuestionData');
     },
+    resetFlashcards: (state) => {
+      const preserveEnabled = state.enabled;
+      const preserveTotalQuestions = state.totalQuestions;
+      Object.assign(state, defaultState);
+      state.enabled = preserveEnabled;
+      state.totalQuestions = preserveTotalQuestions;
+      
+      saveState(state);
     
+      localStorage.removeItem('selectedChoice');
+      localStorage.removeItem('isSubmitted');
+      localStorage.removeItem('hasChecked');
+      localStorage.removeItem('shuffledQuestionData');
+    },
     setCurrentQuestionIndex: (state) => {
       state.currentQuestionIndex = getNextQuestionIndex(state);
       saveState(state);
@@ -125,12 +140,14 @@ export const {
   toggleEnded,
   toggleTryAgain,
   setAutoSubmit,
+  setTotalQuestion,
   setLoading,
   incrementCorrect,
   incrementWrong,
   incrementSkipped,
   resetCounts,
   setCurrentQuestionIndex,
+  resetFlashcards,
 } = FlashcardSlice.actions;
 
 export default FlashcardSlice.reducer;
