@@ -3,17 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { BookOpen, Settings, Database, Cpu, Code2, Network, Layers, ShieldCheck, Repeat } from "lucide-react";
 import CustomButton from "../Common/Components/CustomButton";
 
-// import { exam2022A_FE_AM } from "../../exams/2022A_FE_AM";
-// import { exam2022S_FE_AM } from "../../exams/2022S_FE_AM";
-
-// import { exam2023A_FE_AM } from "../../exams/2023A_FE_AM";
-// import { exam2023S_FE_AM } from "../../exams/2023S_FE_AM";
-
-// import { exam2024A_FE_AM } from "../../exams/2024A_FE_AM";
-// import { exam2024S_FE_AM } from "../../exams/2024S_FE_AM";
-
-///////////////////////
-
 import { exam2022A_FE_AM } from "../../encryptedExams/2022A_FE_AM";
 import { exam2022S_FE_AM } from "../../encryptedExams/2022S_FE_AM";
 
@@ -39,17 +28,6 @@ const topics = [
     { title: "Database Design & SQL Fundamentals", icon: <BookOpen size={40} className="text-green-600" /> },
     { title: "Software Development", icon: <Code2 size={40} className="text-green-600" /> },
 ];
-
-// const examOptions: Record<string, any[]> = {
-//     "2024S_FE_AM": exam2024S_FE_AM,
-//     "2024A_FE_AM": exam2024A_FE_AM,
-
-//     "2023S_FE_AM": exam2023S_FE_AM,
-//     "2023A_FE_AM": exam2023A_FE_AM,
-
-//     "2022S_FE_AM": exam2022S_FE_AM,
-//     "2022A_FE_AM": exam2022A_FE_AM,
-// };
 
 const examOptions: Record<string, any[]> = {
     "2024S_FE_AM": JSON.parse(decryptData(exam2024S_FE_AM)),
@@ -99,12 +77,8 @@ export default function Hero() {
         dispatch(resetCounts());
     
         const selectedQuestions = selectedExams.flatMap((exam) => examOptions[exam]);
-        const jsonString = JSON.stringify(selectedQuestions); // Convert to JSON string before encrypting
-        console.log("RAW DATA");
-        console.log(jsonString);
+        const jsonString = JSON.stringify(selectedQuestions);
         const encryptedData = encryptData(jsonString);
-        console.log("ENCRYPTED:");
-        console.log(encryptedData);
         localStorage.setItem("selectedQuestions", encryptedData);
         dispatch(setTotalQuestion(selectedQuestions.length));
         setShowModal(false);

@@ -38,7 +38,7 @@ const ExitOverlay = () => {
         scoreMessage = 'Keep going! Don’t give up; every mistake is a learning opportunity. 💡';
     }
 
-    if (!ended) return null; // Prevents rendering if hidden
+    if (!ended) return null;
 
     return (
         <div className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 backdrop-blur-md px-4">

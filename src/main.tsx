@@ -1,8 +1,8 @@
-import { useState, useEffect, StrictMode } from "react";
+import { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux"; // ✅ Import Redux Provider
-import { store } from "./store/store"; // ✅ Import Redux store
+import { Provider } from "react-redux";
+import { store } from "./store/store";
 import "./index.css";
 import MainContent from "./views/Common/Layout/MainContent";
 
@@ -10,10 +10,8 @@ const App: React.FC = () => {
   const [devToolsOpen] = useState(false);
 
   useEffect(() => {
-    // Disable Right Click
     const disableRightClick = (event: MouseEvent) => event.preventDefault();
 
-    // Disable DevTools Shortcuts
     const disableDevToolsShortcuts = (event: KeyboardEvent) => {
       if (
         (event.ctrlKey && event.shiftKey && (event.key === "I" || event.key === "J")) ||
@@ -33,7 +31,7 @@ const App: React.FC = () => {
     };
   }, [devToolsOpen]);
 
-  if (devToolsOpen) return null; // Prevent rendering if DevTools was open before loading
+  if (devToolsOpen) return null;
 
   return (
     <div className="h-screen flex flex-col">
@@ -43,11 +41,9 @@ const App: React.FC = () => {
 };
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <Provider store={store}> {/* ✅ Wrap Redux Provider */}
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
-  </StrictMode>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
 );

@@ -78,8 +78,8 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLengt
 
   const handleSkip = () => {
     if (isSkipping) return;
-    dispatch(setIsSkipping(true)); // Disable button
-    setTimeout(() => dispatch(setIsSkipping(false)), 200); // Re-enable after 500ms
+    dispatch(setIsSkipping(true));
+    setTimeout(() => dispatch(setIsSkipping(false)), 200);
     onSkip();
     resetState();
   };
@@ -89,7 +89,6 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLengt
     setIsSubmitted(false);
     setHasChecked(false);
 
-    // Clear localStorage keys related to this state
     localStorage.removeItem('selectedChoice');
     localStorage.removeItem('isSubmitted');
     localStorage.removeItem('hasChecked');
@@ -155,7 +154,6 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLengt
           <CustomButton text="Next" className="bg-gray-700 text-white hover:bg-gray-600" onClick={handleNext} />
         ) : (
           !isLast && (
-            //<CustomButton text="Skip" className={`bg-gray-700 text-white hover:bg-gray-600 ${isSkipping && 'opacity-50 animate-pulse cursor-not-allowed'}`} onClick={handleSkip} />
             <CustomButton text="Skip" className={`bg-gray-700 text-white hover:bg-gray-600`} onClick={handleSkip} />
           )
         )}
