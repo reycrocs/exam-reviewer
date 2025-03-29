@@ -58,12 +58,8 @@ export default function Hero() {
         dispatch(resetCounts());
     
         const selectedQuestions = selectedExams.flatMap((exam) => examOptions[exam].items);
-        const jsonString = JSON.stringify(selectedQuestions); // Convert to JSON string before encrypting
-        // console.log("RAW DATA");
-        // console.log(jsonString);
+        const jsonString = JSON.stringify(selectedQuestions);
         const encryptedData = encryptData(jsonString);
-        //console.log("ENCRYPTED:");
-        //console.log(encryptedData);
         localStorage.setItem("selectedQuestions", encryptedData);
         dispatch(setTotalQuestion(selectedQuestions.length));
         setShowModal(false);
