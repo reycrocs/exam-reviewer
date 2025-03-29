@@ -7,6 +7,7 @@ import { examOptions } from "../../helpers/exams";
 import { useDispatch } from "react-redux";
 import { resetCounts, setTotalQuestion } from "../../store/flashcardSlice";
 import { encryptData } from "../../utils/encrypt";
+import MaintenanceAlert from "../Common/Components/MaintenanceAlert";
 
 const topics = [
     { title: "Problem Solving & Logical Thinking", icon: <Settings size={40} className="text-green-600" /> },
@@ -173,44 +174,33 @@ export default function Hero() {
 
             {/* Modal */}
             {showAlert && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
-                    <div className="bg-gray-900 text-white p-6 rounded-2xl shadow-xl max-w-sm w-full text-center">
-                        <h2 className="text-xl font-black text-white">Under Maintenance</h2>
-                        <p className="mt-3 text-gray-300">Sorry, this feature is currently under maintenance. Please check back later.</p>
-                        <button 
-                            onClick={() => setShowAlert(false)} 
-                            className="mt-4 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 transition"
-                        >
-                            Close
-                        </button>
-                    </div>
-                </div>
+                <MaintenanceAlert onClose={() => setShowAlert(false)} />
             )}
 
             {showModal && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
-                    <div className="bg-gray-900 p-6 rounded-2xl shadow-xl w-full max-w-[550px] max-h-[500px] flex flex-col text-white">
+                <div className="fixed inset-0 flex items-center justify-center bg-gray-200 bg-opacity-75 z-50 p-4">
+                    <div className="bg-white p-6 rounded-2xl shadow-xl w-full max-w-[550px] max-h-[500px] flex flex-col text-gray-900">
                         {/* Header */}
                         <div className="flex items-center justify-between w-full">
-                            <h2 className="text-xl font-black text-white">Select Exams</h2>
-
+                            <h2 className="text-xl font-black text-gray-900">Select Exams</h2>
+                
                             {/* Select All / Deselect All Button */}
                             <button
                                 onClick={() => {
                                     if (selectedExams.length === Object.keys(examOptions).length) {
-                                        setSelectedExams([]); // Deselect all
+                                        setSelectedExams([]);
                                     } else {
-                                        setSelectedExams(Object.keys(examOptions)); // Select all
+                                        setSelectedExams(Object.keys(examOptions));
                                     }
                                 }}
-                                className="text-sm font-semibold text-green-400 hover:text-green-300 transition"
+                                className="text-sm font-semibold text-green-600 hover:text-green-500 transition"
                             >
                                 {selectedExams.length === Object.keys(examOptions).length ? "Deselect All" : "Select All"}
                             </button>
                         </div>
-
+                
                         {/* Scrollable Exam List */}
-                        <div className="mt-4 overflow-y-auto max-h-[300px] px-2 py-2 border border-gray-700 rounded-lg bg-gray-800">
+                        <div className="mt-4 overflow-y-auto max-h-[300px] px-2 py-2 rounded-lg bg-gray-100">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                 {Object.entries(examOptions).map(([exam, { itemCount }]) => {
                                     const isSelected = selectedExams.includes(exam);
@@ -218,39 +208,36 @@ export default function Hero() {
                                         <div
                                             key={exam}
                                             onClick={() => toggleExam(exam)}
-                                            className={`flex items-center text-center sm:text-left sm:flex-row px-4 py-2 rounded-lg cursor-pointer transition border ${
-                                                isSelected ? "bg-green-600 border-green-500 text-white" : "bg-gray-700 border-gray-600 text-gray-300"
+                                            className={`flex items-center text-center sm:text-left sm:flex-row px-4 py-2 rounded-lg cursor-pointer transition ${
+                                                isSelected ? "bg-green-500 border-green-400 text-white" : "bg-white border text-gray-700"
                                             }`}
                                         >
-                                            {/* Fixed space for the check icon */}
                                             <div className="w-5 flex justify-center mr-2">
                                                 {isSelected && <Check className="text-white" size={18} />}
                                             </div>
-
                                             <span className="capitalize text-sm font-medium">{exam.replace(/_/g, ' ')} - {itemCount} Items</span>
                                         </div>
                                     );
                                 })}
                             </div>
                         </div>
-
+                
                         {/* Total Selected Items & Buttons */}
-                        <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm font-semibold text-gray-300">
-                            {/* Total count on top for mobile */}
+                        <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm font-semibold text-gray-700">
                             <span className="mb-3 sm:mb-0">
                                 Total Items: {selectedExams.reduce((total, exam) => total + (examOptions[exam]?.itemCount || 0), 0)} Items
                             </span>
-
-                            {/* Buttons - Always aligned to bottom right on mobile */}
+                
+                            {/* Buttons */}
                             <div className="flex justify-end sm:justify-start space-x-3">
                                 <CustomButton
                                     text="Cancel"
-                                    className="bg-gray-700 text-gray-300 hover:bg-gray-600 transition"
+                                    className="bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
                                     onClick={() => setShowModal(false)}
                                 />
                                 <CustomButton
                                     text="Start"
-                                    className={`bg-green-600 hover:bg-green-700 text-white transition rounded-lg px-4 py-2 font-semibold shadow-sm ${
+                                    className={`bg-green-500 hover:bg-green-600 text-white transition rounded-lg px-4 py-2 font-semibold shadow-sm ${
                                         selectedExams.length === 0 ? "opacity-50 cursor-not-allowed" : ""
                                     }`}
                                     onClick={handleProceed}

@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import ChoicesPanel from "./ChoicesPanel";
 import ExitOverlay from "./Exit";
 import { decryptData, encryptData } from "../../utils/encrypt";
+import ConfirmationModal from "../Common/Components/ConfirmationModal";
 
 const shuffleArray = <T,>(array: T[]): T[] => {
     return array
@@ -155,30 +156,12 @@ export default function WEB002() {
             </div>
 
             {isModalOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-80">
-                        <h2 className="text-lg font-semibold">
-                            {modalType === "submit" ? "Submit Exam" : "Exit Exam"}
-                        </h2>
-                        <p className="mt-2">Are you sure you want to {modalType}?</p>
-                        <div className="mt-4 flex justify-end space-x-4">
-                            <CustomButton
-                                text="Cancel"
-                                className="bg-gray-700 text-white hover:bg-gray-600"
-                                onClick={() => setIsModalOpen(false)}
-                            />
-                            <CustomButton
-                                text={modalType === "submit" ? "Yes, Submit" : "Yes, Exit"}
-                                className={`${
-                                    modalType === "submit"
-                                        ? "bg-green-600 hover:bg-green-700"
-                                        : "bg-red-700 hover:bg-red-900"
-                                } text-white`}
-                                onClick={handleConfirm}
-                            />
-                        </div>
-                    </div>
-                </div>
+                <ConfirmationModal
+                    modalType={modalType}
+                    isOpen={isModalOpen}
+                    onClose={() =>setIsModalOpen(false)}
+                    onConfirm={handleConfirm}
+                />
             )}
 
             {!isLoading && !ended && (

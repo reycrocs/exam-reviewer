@@ -150,7 +150,7 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLengt
     <div className="fixed bottom-0 w-full flex flex-col">
       <div className="container mx-auto max-w-4xl flex justify-between items-center p-2">
         {/* Left side - Question count */}
-        <span className="text-sm text-gray-300">
+        <span className="text-sm text-gray-500">
           {totalQuestions - (correctCount + wrongCount)} questions left
         </span>
 
@@ -166,14 +166,14 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLengt
             {isSubmitted ? (
                 <CustomButton
                     text="Next"
-                    className="bg-gray-700 text-white hover:bg-gray-600"
+                    className="bg-gray-900 text-white hover:bg-gray-700"
                     onClick={handleNext}
                 />
             ) : (
                 !isLast && (
                     <CustomButton
                         text="Skip"
-                        className="bg-gray-700 text-white hover:bg-gray-600"
+                        className="bg-gray-900 text-white hover:bg-gray-700"
                         onClick={handleSkip}
                     />
                 )

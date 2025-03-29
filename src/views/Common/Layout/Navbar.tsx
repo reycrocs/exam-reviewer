@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import CustomButton from "../Components/CustomButton";
 import CustomLinks from "../Components/CustomLinks";
 import { useNavigate } from "react-router-dom";
-import { Menu } from "lucide-react";
+import { Mail, Menu } from "lucide-react";
+import MaintenanceAlert from "../Components/MaintenanceAlert";
 export default function Navbar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
+  const [showAlert, setShowAlert] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -32,6 +34,7 @@ export default function Navbar() {
   }, [lastScrollY]);
 
   return (
+    <>
     <nav
       className={`p-4 fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         showNavbar ? "translate-y-0" : "-translate-y-full"
@@ -59,7 +62,7 @@ export default function Navbar() {
               ? "bg-white text-gray-900 hover:bg-green-600" 
               : "bg-gray-900 text-white hover:bg-green-600"
             }
-            onClick={() => navigate("/web001")}
+            onClick={() => setShowAlert(true)}
           />
         </ul>
       </div>
@@ -73,5 +76,10 @@ export default function Navbar() {
         </ul>
       )}
     </nav>
+    {/* Modal */}
+    {showAlert && (
+      <MaintenanceAlert onClose={() => setShowAlert(false)} />
+    )}
+    </>
   );
 }
