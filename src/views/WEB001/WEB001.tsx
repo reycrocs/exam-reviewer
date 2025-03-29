@@ -12,13 +12,13 @@ export default function WEB001() {
 
     useEffect(() => {
         if (isModalOpen) {
-            document.body.style.overflow = "hidden"; // Disable background scrolling
+            document.body.style.overflow = "hidden";
         } else {
-            document.body.style.overflow = ""; // Re-enable scrolling when modal closes
+            document.body.style.overflow = "";
         }
     
         return () => {
-            document.body.style.overflow = ""; // Cleanup on unmount
+            document.body.style.overflow = "";
         };
     }, [isModalOpen]);
 

@@ -1,12 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import flashcardReducer from "./flashcardSlice"; // Updated import
+import flashcardReducer from "./flashcardSlice";
 
 export const store = configureStore({
   reducer: {
-    flashcard: flashcardReducer, // Use the renamed slice
+    flashcard: flashcardReducer,
   },
 });
 
-// TypeScript types
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

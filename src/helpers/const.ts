@@ -5,6 +5,6 @@ export const API_CHECK_IF_ADMIN = "api/user/check-admin-flag";
 export const URL = {
     LANDINGPAGE: "/",
     WEB001: "/web001",
-    WEB002: "/web002",
+    WEB002: "/flashcards",
     UNAUTHORIZED: "/unauthorized",
 }

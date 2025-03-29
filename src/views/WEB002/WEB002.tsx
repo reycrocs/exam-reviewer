@@ -52,13 +52,13 @@ export default function WEB002() {
 
     useEffect(() => {
         if (isModalOpen) {
-            document.body.style.overflow = "hidden"; // Disable background scrolling
+            document.body.style.overflow = "hidden";
         } else {
-            document.body.style.overflow = ""; // Re-enable scrolling when modal closes
+            document.body.style.overflow = "";
         }
     
         return () => {
-            document.body.style.overflow = ""; // Cleanup on unmount
+            document.body.style.overflow = "";
         };
     }, [isModalOpen]);
 
@@ -74,7 +74,7 @@ export default function WEB002() {
             const decryptedString = decryptData(encryptedData);
             if (!decryptedString) throw new Error("Decryption failed or returned null.");
     
-            const parsedData = JSON.parse(decryptedString); // Parse decrypted JSON
+            const parsedData = JSON.parse(decryptedString);
             setShuffledData(getOrCreateQuestionData(parsedData));
         } catch (error) {
             console.error("Invalid JSON data:", error);
@@ -147,7 +147,6 @@ export default function WEB002() {
 
                 <img
                     className={`mx-auto w-full ${isLoading || error ? "opacity-0" : "opacity-100"}`}
-                    //src={`/q/qdata/${questionData.img}`}
                     src={`/q/${q[1]}/${q[2]}/${q[0]}/${questionData.img}`}
                     alt="question"
                     onLoad={() => dispatch(setLoading(false))}
@@ -187,7 +186,7 @@ export default function WEB002() {
                     onNext={() => handleNextQuestion(false)}
                     onSkip={() => handleNextQuestion(true)}
                     correctAnswer={questionData.answer}
-                    choicesLength={questionData.choicesLength ?? 4} // Default to 4 if undefined
+                    choicesLength={questionData.choicesLength ?? 4}
                     totalAnsweredQuestion={totalAnswered}
                     totalQuestions={totalQuestions}
                 />

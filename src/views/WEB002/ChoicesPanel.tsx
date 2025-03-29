@@ -151,7 +151,7 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLengt
       <div className="container mx-auto max-w-4xl flex justify-between items-center p-2">
         {/* Left side - Question count */}
         <span className="text-sm text-gray-300">
-          {totalQuestions - (correctCount + wrongCount)} questions remaining
+          {totalQuestions - (correctCount + wrongCount)} questions left
         </span>
 
         {/* Right side - Buttons */}
@@ -193,7 +193,7 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLengt
                 bgColor = isCorrect ? "bg-green-500 text-white animate-pulse" : "bg-red-500";
               }
               if (!isSelected && selectedChoice && isCorrect && isSubmitted) {
-                bgColor = "bg-green-500 animate-bounce text-white"; // Increased z-index
+                bgColor = "bg-green-500 animate-bounce text-white";
               }
 
               return (

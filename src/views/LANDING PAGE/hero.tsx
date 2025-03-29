@@ -27,11 +27,12 @@ export default function Hero() {
 
     const marqueeRef = useRef<HTMLDivElement>(null);
     const [showModal, setShowModal] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
     const [continueModal, setContinueModal] = useState(false);
     const [selectedExams, setSelectedExams] = useState<string[]>([]);
 
     useEffect(() => {
-        if (showModal) {
+        if (showModal || showAlert) {
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "";
@@ -40,7 +41,7 @@ export default function Hero() {
         return () => {
             document.body.style.overflow = "";
         };
-    }, [showModal]);
+    }, [showModal, showAlert]);
 
     const toggleExam = (exam: string) => {
         setSelectedExams(prev =>
@@ -62,7 +63,7 @@ export default function Hero() {
 
     const handleContinue = () => {
         setContinueModal(false);
-        navigate("/web002");
+        navigate("/flashcards");
     };
 
     const handleProceed = () => {
@@ -75,7 +76,7 @@ export default function Hero() {
         localStorage.setItem("selectedQuestions", encryptedData);
         dispatch(setTotalQuestion(selectedQuestions.length));
         setShowModal(false);
-        navigate("/web002");
+        navigate("/flashcards");
     };
     
 
@@ -114,7 +115,7 @@ export default function Hero() {
                     <span className="font-black text-gray-900">PREP<span className="text-green-600">IT</span></span> gives you the power to prepare your way—with smart flashcards, real exam simulations, and review tools built to help you pass your IT exams faster and with confidence.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
-                    <CustomButton text="Start Demo" onClick={() => navigate("/web001")} />
+                    <CustomButton text="Start Demo" onClick={() => setShowAlert(true)} />
                     <span className="text-gray-500 text-sm sm:text-base">or</span>
                     <CustomButton text="Try Flashcards" pill="New" onClick={handleFlashcard} />
                 </div>
@@ -166,6 +167,22 @@ export default function Hero() {
                                 onClick={handleContinue}
                             />
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal */}
+            {showAlert && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
+                    <div className="bg-gray-900 text-white p-6 rounded-2xl shadow-xl max-w-sm w-full text-center">
+                        <h2 className="text-xl font-black text-green-600">Under Maintenance</h2>
+                        <p className="mt-3 text-gray-300">Sorry, this feature is currently under maintenance. Please check back later.</p>
+                        <button 
+                            onClick={() => setShowAlert(false)} 
+                            className="mt-4 px-4 py-2 bg-gray-700 text-gray-300 rounded-lg hover:bg-gray-600 transition"
+                        >
+                            Close
+                        </button>
                     </div>
                 </div>
             )}
