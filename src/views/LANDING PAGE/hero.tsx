@@ -1,49 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Settings, Database, Cpu, Code2, Network, Layers, ShieldCheck, Repeat } from "lucide-react";
+import { BookOpen, Settings, Database, Cpu, Code2, Network, Layers, ShieldCheck, Repeat, Check } from "lucide-react";
 import CustomButton from "../Common/Components/CustomButton";
-
-// import { exam2019A_FE_AM } from "../../exams/2019A_FE_AM";
-// import { exam2019S_FE_AM } from "../../exams/2019S_FE_AM";
-
-// import { exam2020A_FE_AM } from "../../exams/2020A_FE_AM";
-// import { exam2020S_FE_AM } from "../../exams/2020S_FE_AM";
-
-// import { exam2021A_FE_AM } from "../../exams/2021A_FE_AM";
-// import { exam2021S_FE_AM } from "../../exams/2021S_FE_AM";
-
-// import { exam2022A_FE_AM } from "../../exams/2022A_FE_AM";
-// import { exam2022S_FE_AM } from "../../exams/2022S_FE_AM";
-
-// import { exam2023A_FE_AM } from "../../exams/2023A_FE_AM";
-// import { exam2023S_FE_AM } from "../../exams/2023S_FE_AM";
-
-// import { exam2024A_FE_AM } from "../../exams/2024A_FE_AM";
-// import { exam2024S_FE_AM } from "../../exams/2024S_FE_AM";
-
-///////////////////////
-
-import { exam2019A_FE_AM } from "../../encryptedExams/2019A_FE_AM";
-import { exam2019S_FE_AM } from "../../encryptedExams/2019S_FE_AM";
-
-import { exam2020A_FE_AM } from "../../encryptedExams/2020A_FE_AM";
-import { exam2020S_FE_AM } from "../../encryptedExams/2020S_FE_AM";
-
-import { exam2021A_FE_AM } from "../../encryptedExams/2021A_FE_AM";
-import { exam2021S_FE_AM } from "../../encryptedExams/2021S_FE_AM";
-
-import { exam2022A_FE_AM } from "../../encryptedExams/2022A_FE_AM";
-import { exam2022S_FE_AM } from "../../encryptedExams/2022S_FE_AM";
-
-import { exam2023A_FE_AM } from "../../encryptedExams/2023A_FE_AM";
-import { exam2023S_FE_AM } from "../../encryptedExams/2023S_FE_AM";
-
-import { exam2024A_FE_AM } from "../../encryptedExams/2024A_FE_AM";
-import { exam2024S_FE_AM } from "../../encryptedExams/2024S_FE_AM";
+import { examOptions } from "../../helpers/exams";
 
 import { useDispatch } from "react-redux";
 import { resetCounts, setTotalQuestion } from "../../store/flashcardSlice";
-import { encryptData, decryptData } from "../../utils/encrypt";
+import { encryptData } from "../../utils/encrypt";
 
 const topics = [
     { title: "Problem Solving & Logical Thinking", icon: <Settings size={40} className="text-green-600" /> },
@@ -57,46 +20,6 @@ const topics = [
     { title: "Database Design & SQL Fundamentals", icon: <BookOpen size={40} className="text-green-600" /> },
     { title: "Software Development", icon: <Code2 size={40} className="text-green-600" /> },
 ];
-
-// const examOptions: Record<string, any[]> = {
-//     "2024S_FE_AM": exam2024S_FE_AM,
-//     "2024A_FE_AM": exam2024A_FE_AM,
-
-//     "2023S_FE_AM": exam2023S_FE_AM,
-//     "2023A_FE_AM": exam2023A_FE_AM,
-
-//     "2022S_FE_AM": exam2022S_FE_AM,
-//     "2022A_FE_AM": exam2022A_FE_AM,
-
-//     "2021S_FE_AM": exam2021S_FE_AM,
-//     "2021A_FE_AM": exam2021A_FE_AM,
-
-//     "2020S_FE_AM": exam2020S_FE_AM,
-//     "2020A_FE_AM": exam2020A_FE_AM,
-
-//     "2019S_FE_AM": exam2019S_FE_AM,
-//     "2019A_FE_AM": exam2019A_FE_AM,
-// };
-
-const examOptions: Record<string, any[]> = {
-    "2024S_FE_AM": JSON.parse(decryptData(exam2024S_FE_AM)),
-    "2024A_FE_AM": JSON.parse(decryptData(exam2024A_FE_AM)),
-
-    "2023S_FE_AM": JSON.parse(decryptData(exam2023S_FE_AM)),
-    "2023A_FE_AM": JSON.parse(decryptData(exam2023A_FE_AM)),
-
-    "2022S_FE_AM": JSON.parse(decryptData(exam2022S_FE_AM)),
-    "2022A_FE_AM": JSON.parse(decryptData(exam2022A_FE_AM)),
-
-    "2021S_FE_AM": JSON.parse(decryptData(exam2021S_FE_AM)),
-    "2021A_FE_AM": JSON.parse(decryptData(exam2021A_FE_AM)),
-
-    "2020S_FE_AM": JSON.parse(decryptData(exam2020S_FE_AM)),
-    "2020A_FE_AM": JSON.parse(decryptData(exam2020A_FE_AM)),
-
-    "2019S_FE_AM": JSON.parse(decryptData(exam2019S_FE_AM)),
-    "2019A_FE_AM": JSON.parse(decryptData(exam2019A_FE_AM)),
-};
 
 export default function Hero() {
     const navigate = useNavigate();
@@ -134,10 +57,10 @@ export default function Hero() {
         localStorage.removeItem("shuffledQuestionData");
         dispatch(resetCounts());
     
-        const selectedQuestions = selectedExams.flatMap((exam) => examOptions[exam]);
+        const selectedQuestions = selectedExams.flatMap((exam) => examOptions[exam].items);
         const jsonString = JSON.stringify(selectedQuestions); // Convert to JSON string before encrypting
-        //console.log("RAW DATA");
-        //console.log(jsonString);
+        // console.log("RAW DATA");
+        // console.log(jsonString);
         const encryptedData = encryptData(jsonString);
         //console.log("ENCRYPTED:");
         //console.log(encryptedData);
@@ -240,38 +163,75 @@ export default function Hero() {
             )}
 
             {showModal && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-80">
-                        <div className="flex flex-col items-center text-center">
-                            <h2 className="text-lg font-semibold">Select Exams</h2>
-                            <div className="mt-4 space-y-2">
-                                {Object.keys(examOptions).map((exam) => (
-                                    <label key={exam} className="flex items-center gap-3">
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedExams.includes(exam)}
-                                            onChange={() => toggleExam(exam)}
-                                            className="form-checkbox text-green-500 accent-green-500"
-                                        />
-                                        <span className="capitalize text-sm">{exam.replace(/_/g, ' ')}</span>
-                                    </label>
-                                ))}
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
+                    <div className="bg-gray-900 p-6 rounded-2xl shadow-xl w-full max-w-[550px] max-h-[500px] flex flex-col text-white">
+                        {/* Header */}
+                        <div className="flex items-center justify-between w-full">
+                            <h2 className="text-xl font-black text-white">Select Exams</h2>
+
+                            {/* Select All / Deselect All Button */}
+                            <button
+                                onClick={() => {
+                                    if (selectedExams.length === Object.keys(examOptions).length) {
+                                        setSelectedExams([]); // Deselect all
+                                    } else {
+                                        setSelectedExams(Object.keys(examOptions)); // Select all
+                                    }
+                                }}
+                                className="text-sm font-semibold text-green-400 hover:text-green-300 transition"
+                            >
+                                {selectedExams.length === Object.keys(examOptions).length ? "Deselect All" : "Select All"}
+                            </button>
+                        </div>
+
+                        {/* Scrollable Exam List */}
+                        <div className="mt-4 overflow-y-auto max-h-[300px] px-2 py-2 border border-gray-700 rounded-lg bg-gray-800">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                {Object.entries(examOptions).map(([exam, { itemCount }]) => {
+                                    const isSelected = selectedExams.includes(exam);
+                                    return (
+                                        <div
+                                            key={exam}
+                                            onClick={() => toggleExam(exam)}
+                                            className={`flex items-center text-center sm:text-left sm:flex-row px-4 py-2 rounded-lg cursor-pointer transition border ${
+                                                isSelected ? "bg-green-600 border-green-500 text-white" : "bg-gray-700 border-gray-600 text-gray-300"
+                                            }`}
+                                        >
+                                            {/* Fixed space for the check icon */}
+                                            <div className="w-5 flex justify-center mr-2">
+                                                {isSelected && <Check className="text-white" size={18} />}
+                                            </div>
+
+                                            <span className="capitalize text-sm font-medium">{exam.replace(/_/g, ' ')} - {itemCount} Items</span>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
-                        <div className="mt-6 flex justify-end space-x-3">
-                            <CustomButton
-                                text="Cancel"
-                                className="bg-gray-700 text-white hover:bg-gray-600"
-                                onClick={() => setShowModal(false)}
-                            />
-                            <CustomButton
-                                text="Start"
-                                className={`bg-green-600 hover:bg-green-700 text-white ${
-                                    selectedExams.length === 0 ? "opacity-50 cursor-not-allowed" : ""
-                                }`}
-                                onClick={handleProceed}
-                                disabled={selectedExams.length === 0}
-                            />
+
+                        {/* Total Selected Items & Buttons */}
+                        <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm font-semibold text-gray-300">
+                            {/* Total count on top for mobile */}
+                            <span className="mb-3 sm:mb-0">
+                                Total Items: {selectedExams.reduce((total, exam) => total + (examOptions[exam]?.itemCount || 0), 0)} Items
+                            </span>
+
+                            {/* Buttons - Always aligned to bottom right on mobile */}
+                            <div className="flex justify-end sm:justify-start space-x-3">
+                                <CustomButton
+                                    text="Cancel"
+                                    className="bg-gray-700 text-gray-300 hover:bg-gray-600 transition"
+                                    onClick={() => setShowModal(false)}
+                                />
+                                <CustomButton
+                                    text="Start"
+                                    className={`bg-green-600 hover:bg-green-700 text-white transition rounded-lg px-4 py-2 font-semibold shadow-sm ${
+                                        selectedExams.length === 0 ? "opacity-50 cursor-not-allowed" : ""
+                                    }`}
+                                    onClick={handleProceed}
+                                    disabled={selectedExams.length === 0}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -18,6 +18,8 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLengt
   const dispatch = useDispatch();
   const autoSubmit = useSelector((state: RootState) => state.flashcard.enabled);
   const isSkipping = useSelector((state: RootState) => state.flashcard.isSkipping);
+  const correctCount = useSelector((state: RootState) => state.flashcard.correctCount);
+  const wrongCount = useSelector((state: RootState) => state.flashcard.wrongCount);
   const allQuestionsAnswered = totalAnsweredQuestion === totalQuestions;
   
   // Load initial values from localStorage
@@ -146,17 +148,37 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({ correctAnswer, choicesLengt
 
   return (
     <div className="fixed bottom-0 w-full flex flex-col">
-      <div className="container mx-auto max-w-4xl flex justify-end space-x-2 p-2">
-        {!isSubmitted && selectedChoice && !autoSubmit && (
-          <CustomButton text="Submit" className="bg-green-600 text-white hover:bg-green-700" onClick={handleSubmit} />
-        )}
-        {isSubmitted ? (
-          <CustomButton text="Next" className="bg-gray-700 text-white hover:bg-gray-600" onClick={handleNext} />
-        ) : (
-          !isLast && (
-            <CustomButton text="Skip" className={`bg-gray-700 text-white hover:bg-gray-600`} onClick={handleSkip} />
-          )
-        )}
+      <div className="container mx-auto max-w-4xl flex justify-between items-center p-2">
+        {/* Left side - Question count */}
+        <span className="text-sm text-gray-300">
+          {totalQuestions - (correctCount + wrongCount)} questions remaining
+        </span>
+
+        {/* Right side - Buttons */}
+        <div className="flex space-x-2">
+            {!isSubmitted && selectedChoice && !autoSubmit && (
+                <CustomButton
+                    text="Submit"
+                    className="bg-green-600 text-white hover:bg-green-700"
+                    onClick={handleSubmit}
+                />
+            )}
+            {isSubmitted ? (
+                <CustomButton
+                    text="Next"
+                    className="bg-gray-700 text-white hover:bg-gray-600"
+                    onClick={handleNext}
+                />
+            ) : (
+                !isLast && (
+                    <CustomButton
+                        text="Skip"
+                        className="bg-gray-700 text-white hover:bg-gray-600"
+                        onClick={handleSkip}
+                    />
+                )
+            )}
+        </div>
       </div>
 
       <div className="mt-auto w-full bg-white shadow-lg py-4 border-t relative"> 
