@@ -175,7 +175,7 @@ export default function Hero() {
             {showAlert && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
                     <div className="bg-gray-900 text-white p-6 rounded-2xl shadow-xl max-w-sm w-full text-center">
-                        <h2 className="text-xl font-black text-green-600">Under Maintenance</h2>
+                        <h2 className="text-xl font-black text-white">Under Maintenance</h2>
                         <p className="mt-3 text-gray-300">Sorry, this feature is currently under maintenance. Please check back later.</p>
                         <button 
                             onClick={() => setShowAlert(false)} 
