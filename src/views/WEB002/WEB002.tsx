@@ -81,10 +81,6 @@ export default function WEB002() {
 
     const q = questionData.img.split(/_/);
     
-    if (isLoading) {
-        console.log(questionData.img);
-    }
-    
     const handleOpenModal = (type: string) => {
         setModalType(type);
         setIsModalOpen(true);
