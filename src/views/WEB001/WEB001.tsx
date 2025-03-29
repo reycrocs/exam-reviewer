@@ -2,13 +2,25 @@ import CustomButton from "../Common/Components/CustomButton";
 import Instructions from "../Common/Components/Instructions";
 import { useNavigate } from "react-router-dom";
 import { TopBar } from "./TopBarWEB001";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function WEB001() {
     const navigate = useNavigate();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalType, setModalType] = useState("");
+
+    useEffect(() => {
+        if (isModalOpen) {
+            document.body.style.overflow = "hidden"; // Disable background scrolling
+        } else {
+            document.body.style.overflow = ""; // Re-enable scrolling when modal closes
+        }
+    
+        return () => {
+            document.body.style.overflow = ""; // Cleanup on unmount
+        };
+    }, [isModalOpen]);
 
     const handleOpenModal = (type:string) => {
         setModalType(type);

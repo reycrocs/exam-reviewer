@@ -51,6 +51,18 @@ export default function WEB002() {
     const totalAnswered = correctCount + wrongCount;
 
     useEffect(() => {
+        if (isModalOpen) {
+            document.body.style.overflow = "hidden"; // Disable background scrolling
+        } else {
+            document.body.style.overflow = ""; // Re-enable scrolling when modal closes
+        }
+    
+        return () => {
+            document.body.style.overflow = ""; // Cleanup on unmount
+        };
+    }, [isModalOpen]);
+
+    useEffect(() => {
         const encryptedData = localStorage.getItem("selectedQuestions");
     
         if (!encryptedData) {

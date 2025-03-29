@@ -30,6 +30,18 @@ export default function Hero() {
     const [continueModal, setContinueModal] = useState(false);
     const [selectedExams, setSelectedExams] = useState<string[]>([]);
 
+    useEffect(() => {
+        if (showModal) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+    
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [showModal]);
+
     const toggleExam = (exam: string) => {
         setSelectedExams(prev =>
             prev.includes(exam)
