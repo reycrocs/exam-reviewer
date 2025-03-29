@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import CustomButton from "../Components/CustomButton";
 import CustomLinks from "../Components/CustomLinks";
-import { useNavigate } from "react-router-dom";
-import { Mail, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import MaintenanceAlert from "../Components/MaintenanceAlert";
 export default function Navbar() {
-  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
