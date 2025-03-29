@@ -223,7 +223,7 @@ export default function Hero() {
                         </div>
                 
                         {/* Total Selected Items & Buttons */}
-                        <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm font-semibold text-gray-700">
+                        <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm text-gray-700">
                             <span className="mb-3 sm:mb-0">
                                 Total Items: {selectedExams.reduce((total, exam) => total + (examOptions[exam]?.itemCount || 0), 0)} Items
                             </span>

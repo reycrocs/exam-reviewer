@@ -1,5 +1,6 @@
 import React from "react";
 import { AlertTriangle } from "lucide-react";
+import CustomButton from "./CustomButton";
 
 type MaintenanceAlertProps = {
   onClose: () => void;
@@ -14,12 +15,11 @@ const MaintenanceAlert: React.FC<MaintenanceAlertProps> = ({ onClose }) => {
         <p className="mt-3 text-gray-700">
           Sorry, this feature is currently under maintenance. Please check back later.
         </p>
-        <button
-          onClick={onClose}
-          className="mt-4 px-4 py-2 bg-gray-300 text-gray-900 rounded-lg hover:bg-gray-400 transition"
-        >
-          Close
-        </button>
+        <CustomButton
+            text="Close"
+            className="bg-gray-200 text-gray-700 hover:bg-gray-300 mt-4"
+            onClick={onClose}
+        />
       </div>
     </div>
   );
