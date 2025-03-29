@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Settings, Database, Cpu, Code2, Network, Layers, ShieldCheck, Repeat, Check } from "lucide-react";
+import { BookOpen, Settings, Database, Cpu, Code2, Network, Layers, ShieldCheck, Repeat, Check, AlertCircle } from "lucide-react";
 import CustomButton from "../Common/Components/CustomButton";
 import { examOptions } from "../../helpers/exams";
 
@@ -147,25 +147,26 @@ export default function Hero() {
             </div>
 
             {continueModal && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-80">
+                <div className="fixed inset-0 flex items-center justify-center bg-gray-200 bg-opacity-75 z-50 p-4">
+                    <div className="bg-white text-gray-900 p-6 rounded-2xl shadow-lg w-100">
                         <div className="flex flex-col items-center text-center">
+                            <AlertCircle className="w-10 h-10 text-yellow-500 mb-2" />
                             <h2 className="text-lg font-semibold">Continue Flashcards</h2>
                             <p className="mt-2">You have unfinished flashcards. Do you wish to continue?</p>
                         </div>
-                        <div className="mt-6 flex justify-end space-x-3">
+                        <div className="mt-6 flex items-center justify-center space-x-3">
                             <CustomButton
-                                text="Create New"
-                                className="bg-gray-700 text-white hover:bg-gray-600"
-                                onClick={() => {
-                                    setContinueModal(false);
-                                    setShowModal(true);
-                                }}
+                            text="Create New"
+                            className="bg-gray-300 text-gray-800 hover:bg-gray-400"
+                            onClick={() => {
+                                setContinueModal(false);
+                                setShowModal(true);
+                            }}
                             />
                             <CustomButton
-                                text="Continue"
-                                className="bg-green-600 hover:bg-green-700 text-white"
-                                onClick={handleContinue}
+                            text="Continue"
+                            className="bg-green-500 hover:bg-green-600 text-white"
+                            onClick={handleContinue}
                             />
                         </div>
                     </div>
