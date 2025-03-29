@@ -73,6 +73,14 @@ export default function Navbar() {
           <li><CustomLinks href="/#features" text="Features" /></li>
           <li><CustomLinks href="/#about" text="About" /></li>
           <li><CustomLinks href="/#testimonials" text="Testimonials" /></li>
+          <CustomButton
+            text="Start Demo"
+            className={isScrolled 
+              ? "bg-white text-gray-900 hover:bg-green-600" 
+              : "bg-gray-900 text-white hover:bg-green-600"
+            }
+            onClick={() => setShowAlert(true)}
+          />
         </ul>
       )}
     </nav>
