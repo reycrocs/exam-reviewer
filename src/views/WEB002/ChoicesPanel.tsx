@@ -11,8 +11,7 @@ import {
 import CustomButton from "../Common/Components/CustomButton";
 import confetti from "canvas-confetti";
 import {
-  ChevronDown,
-  ChevronUp,
+  Circle,
   Eraser,
   Pencil,
   PencilOff,
@@ -190,157 +189,178 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({
     localStorage.setItem("hasChecked", hasChecked.toString());
   }, [selectedChoice, isSubmitted, hasChecked]);
 
-  const [showStackedButtons, setShowStackedButtons] = useState(false);
   const [selectedColor, setSelectedColor] = useState<string>("black");
-  const [showColorChoices, setShowColorChoices] = useState(false);
   const [isDrawing, setIsDrawing] = useState(false);
-
-  const toggleStackedButtons = () => {
-    setShowStackedButtons((prevState) => !prevState);
-  };
+  const [isErasing, setIsErasing] = useState(false);
+  const [showPenTools, setShowPenTools] = useState(false);
 
   const handleColorSelect = (color: string) => {
     setSelectedColor(color);
-    setShowColorChoices(false); // Hide the color options after selection
   };
 
   return (
     <div className="fixed bottom-0 w-full flex flex-col z-20">
-      <div className="container mx-auto max-w-4xl flex justify-between items-end p-2">
-        {/* Bottom Left - Question Count */}
-        <span className="text-sm text-gray-500">
-          {totalQuestions - (correctCount + wrongCount)} questions left
-        </span>
-
-        <div className="flex flex-col items-end space-y-2">
-          {/* Icon Buttons */}
-          {showStackedButtons && (
-            <>
-              <CustomButton
-                className="bg-gray-900 text-white hover:bg-gray-700"
-                buttonType="circle"
-                onClick={() => {
-                  handleUndo();
-                  toggleErase(false);
-                }}
-              >
-                <RotateCcw size={14} />
-              </CustomButton>
-              <CustomButton
-                className="bg-gray-900 text-white hover:bg-gray-700"
-                buttonType="circle"
-                onClick={() => toggleErase(true)}
-              >
-                <Eraser size={14} />
-              </CustomButton>
-              {/* Clear Button */}
-              <CustomButton
-                className="bg-gray-900 text-white hover:bg-gray-700"
-                buttonType="circle"
-                onClick={() => {
-                  handleClear();
-                  toggleStackedButtons();
-                  toggleErase(false);
-                }}
-              >
-                <Trash2 size={14} />
-              </CustomButton>
-              {/* Container for Color Picker Button and Choices */}
-              <div className="relative flex flex-col items-center">
-                {/* Color Picker Button */}
-                <CustomButton
-                  className={`p-2 text-white hover:bg-gray-700 ${
-                    !isDrawing ? "bg-gray-900" : `bg-${selectedColor}`
-                  }`}
-                  buttonType="circle"
-                  onClick={() => setShowColorChoices((prev) => !prev)}
-                >
-                  {isDrawing ? <Pencil size={14} /> : <PencilOff size={14} />}
-                </CustomButton>
-
-                {/* Conditionally render the color choices beside the color button (on the left) */}
-                {showColorChoices && (
-                  <div className="flex space-x-2 absolute top-0 right-full mr-2">
-                    <CustomButton
-                      className="p-2 bg-black text-white hover:bg-gray-800"
-                      buttonType="circle"
-                      onClick={() => {
-                        handleColorSelect("black");
-                        changeColor("black");
-                        setIsDrawing(true);
-                        drawing(true);
-                        toggleStackedButtons();
-                        toggleErase(false);
-                      }}
-                    ></CustomButton>
-                    <CustomButton
-                      className="p-2 bg-red-500 text-white hover:bg-red-600"
-                      buttonType="circle"
-                      onClick={() => {
-                        handleColorSelect("red-500");
-                        changeColor("red");
-                        setIsDrawing(true);
-                        drawing(true);
-                        toggleStackedButtons();
-                        toggleErase(false);
-                      }}
-                    ></CustomButton>
-                    <CustomButton
-                      className="p-2 bg-blue-500 text-white hover:bg-blue-600"
-                      buttonType="circle"
-                      onClick={() => {
-                        handleColorSelect("blue-500");
-                        changeColor("blue");
-                        setIsDrawing(true);
-                        drawing(true);
-                        toggleStackedButtons();
-                        toggleErase(false);
-                      }}
-                    ></CustomButton>
-                    <CustomButton
-                      className="p-2 bg-green-500 text-white hover:bg-green-600"
-                      buttonType="circle"
-                      onClick={() => {
-                        handleColorSelect("green-500");
-                        changeColor("green");
-                        setIsDrawing(true);
-                        drawing(true);
-                        toggleStackedButtons();
-                        toggleErase(false);
-                      }}
-                    ></CustomButton>
-                    <CustomButton
-                      className="bg-white text-gray-600 border border-gray-500 hover:text-red-600 hover:border-red-600"
-                      buttonType="circle"
-                      onClick={() => {
-                        setIsDrawing(false);
-                        drawing(false);
-                        setShowColorChoices(false);
-                        toggleStackedButtons();
-                      }}
-                    >
-                      <PencilOff size={14} />
-                    </CustomButton>
-                  </div>
-                )}
-              </div>
-            </>
-          )}
-          {/* Toggle button */}
+      <div className="container mx-auto max-w-4xl flex justify-between items-center p-2">
+        {/* Left side - Tools */}
+        <div className="flex items-center space-x-2">
+          {/* Undo Button */}
           <CustomButton
             className="bg-gray-900 text-white hover:bg-gray-700"
             buttonType="circle"
-            onClick={toggleStackedButtons}
+            onClick={() => {
+              handleUndo();
+              toggleErase(false);
+            }}
+            tooltip="Undo"
           >
-            {showStackedButtons ? (
-              <ChevronDown size={14} />
-            ) : (
-              <ChevronUp size={14} />
-            )}
+            <RotateCcw size={14} />
           </CustomButton>
 
-          {/* Main Action Buttons */}
-          <div className="flex space-x-2">
+          {/* Delete Button */}
+          <CustomButton
+            className="bg-gray-900 text-white hover:bg-gray-700"
+            buttonType="circle"
+            onClick={() => {
+              handleClear();
+              toggleErase(false);
+            }}
+            tooltip="Delete Drawings"
+          >
+            <Trash2 size={14} />
+          </CustomButton>
+
+          {/* Pen Toggle Button */}
+          {!showPenTools && (
+            <CustomButton
+              className={`text-white hover:bg-gray-700 ${
+                !isDrawing ? "bg-gray-900" : `bg-${selectedColor}`
+              }`}
+              buttonType="circle"
+              onClick={() => setShowPenTools((prev) => !prev)}
+              tooltip="Show Pen Tools"
+            >
+              {isDrawing && !isErasing ? (
+                <Pencil size={14} />
+              ) : !isDrawing && isErasing ? (
+                <Eraser size={14} />
+              ) : (
+                <PencilOff size={14} />
+              )}
+            </CustomButton>
+          )}
+
+          {/* Pen Tools (shown when toggled) */}
+          {showPenTools && (
+            <div className="flex space-x-2">
+              <CustomButton
+                className="bg-gray-900 text-white hover:bg-gray-700"
+                buttonType="circle"
+                onClick={() => {
+                  setIsDrawing(false);
+                  drawing(false);
+                  setShowPenTools(false);
+                  toggleErase(false);
+                  setIsErasing(false);
+                }}
+                tooltip="Disable Pen"
+              >
+                <PencilOff size={14} />
+              </CustomButton>
+              <CustomButton
+                className="bg-gray-900 text-white hover:bg-gray-700"
+                buttonType="circle"
+                onClick={() => {
+                  toggleErase(true);
+                  setIsErasing(true);
+                  setIsDrawing(false);
+                  setShowPenTools(false);
+                }}
+                tooltip="Toggle Eraser"
+              >
+                <Eraser size={14} />
+              </CustomButton>
+
+              <CustomButton
+                className="bg-black text-white hover:bg-gray-800"
+                buttonType="circle"
+                onClick={() => {
+                  handleColorSelect("black");
+                  changeColor("black");
+                  setIsDrawing(true);
+                  drawing(true);
+                  toggleErase(false);
+                  setIsErasing(false);
+                  setShowPenTools(false);
+                }}
+                tooltip="Black Pen"
+              >
+                <Circle size={20} />
+              </CustomButton>
+              <CustomButton
+                className="bg-red-500 text-white hover:bg-red-600"
+                buttonType="circle"
+                onClick={() => {
+                  handleColorSelect("red-500");
+                  changeColor("red");
+                  setIsDrawing(true);
+                  drawing(true);
+                  toggleErase(false);
+                  setIsErasing(false);
+                  setShowPenTools(false);
+                }}
+                tooltip="Red Pen"
+              >
+                <Circle size={20} />
+              </CustomButton>
+              <CustomButton
+                className="bg-green-500 text-white hover:bg-green-600"
+                buttonType="circle"
+                onClick={() => {
+                  handleColorSelect("green-500");
+                  changeColor("green");
+                  setIsDrawing(true);
+                  drawing(true);
+                  toggleErase(false);
+                  setIsErasing(false);
+                  setShowPenTools(false);
+                }}
+                tooltip="Green Pen"
+              >
+                <Circle size={20} />
+              </CustomButton>
+              <CustomButton
+                className="bg-blue-500 text-white hover:bg-blue-600"
+                buttonType="circle"
+                onClick={() => {
+                  handleColorSelect("blue-500");
+                  changeColor("blue");
+                  setIsDrawing(true);
+                  drawing(true);
+                  toggleErase(false);
+                  setIsErasing(false);
+                  setShowPenTools(false);
+                }}
+                tooltip="Blue Pen"
+              >
+                <Circle size={20} />
+              </CustomButton>
+            </div>
+          )}
+        </div>
+
+        {/* Right side - Question Count and Action Buttons */}
+        <div
+          className={`flex items-center space-x-4 ${
+            showPenTools && "hidden sm:flex"
+          }`}
+        >
+          {/* Question Count */}
+          <span className="text-sm text-gray-500 select-none">
+            {totalQuestions - (correctCount + wrongCount)} questions left
+          </span>
+
+          {/* Action Buttons */}
+          <div className="flex space-x-2 select-none">
             {!isSubmitted && selectedChoice && !autoSubmit && (
               <CustomButton
                 text="Submit"
@@ -367,7 +387,7 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({
         </div>
       </div>
 
-      <div className="mt-auto w-full bg-white shadow-lg py-4 border-t relative">
+      <div className="mt-auto w-full bg-white shadow-lg py-4 border-t relative select-none">
         <div className="container mx-auto max-w-4xl px-4">
           <div className="flex justify-center items-center space-x-2">
             {choices.map((choice) => {

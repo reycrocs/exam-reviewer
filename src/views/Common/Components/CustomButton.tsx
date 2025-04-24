@@ -9,6 +9,7 @@ interface CustomButtonProps {
   disabled?: boolean;
   pill?: string;
   buttonType?: "default" | "icon" | "circle";
+  tooltip?: string;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -20,6 +21,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   disabled = false,
   pill,
   buttonType = "default",
+  tooltip,
 }) => {
   const baseStyles = `
     ${disabled ? "bg-gray-400 cursor-not-allowed" : ""}
@@ -35,7 +37,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       : "px-4 py-2 rounded-md text-sm";
 
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block group">
       <button
         type={type}
         onClick={onClick}
@@ -44,6 +46,13 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       >
         {children ? children : text}
       </button>
+
+      {tooltip && (
+        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap z-10">
+          {tooltip}
+        </div>
+      )}
+
       {pill && (
         <span className="absolute -top-2 -right-3 bg-green-600 text-white font-light text-[10px] px-2 py-0.5 rounded-full rotate-[30deg] shadow-md">
           {pill}

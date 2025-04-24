@@ -162,13 +162,15 @@ export default function WEB002() {
 
       <div
         className={`relative sm:w-full ${
-          !drawing ? "pointer-events-none" : ""
+          !drawing && !isErasing ? "pointer-events-none" : ""
         } px-4 pt-5 sm:pt-10 flex flex-col items-center pb-52 min-h-[calc(100vh-70px)]`}
       >
         {/* ✍️ Canvas overlay */}
         <ReactSketchCanvas
           ref={canvasRef}
-          className="absolute top-0 left-0 w-full h-full z-10"
+          className={`absolute top-0 left-0 !border-none w-full h-full z-10 ${
+            drawing ? "cursor-crosshair" : ""
+          } ${isErasing ? "cursor-cell" : ""}`}
           strokeWidth={3}
           strokeColor={color}
           canvasColor="transparent"
@@ -205,7 +207,7 @@ export default function WEB002() {
         <img
           className={`mx-auto w-full sm:max-w-4xl ${
             isLoading || error ? "opacity-0" : "opacity-100"
-          } z-0`}
+          } z-0 select-none`}
           src={`/q/${q[1]}/${q[2]}/${q[0]}/${questionData.img}`}
           alt="question"
           onLoad={() => dispatch(setLoading(false))}

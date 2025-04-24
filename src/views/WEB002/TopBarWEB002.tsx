@@ -27,7 +27,7 @@ export const TopBarWEB002: React.FC<TopBarProps> = ({ onExit }) => {
   return (
     <nav
       id="header"
-      className="p-4 top-0 left-0 w-full z-50 transition-all duration-300 bg-gray-900 text-white drop-shadow-sm"
+      className="p-4 top-0 left-0 w-full z-50 transition-all duration-300 bg-gray-900 text-white drop-shadow-sm select-none"
     >
       <div className="container mx-auto flex items-center relative">
         {/* Logo - Hidden on mobile */}
