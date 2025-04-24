@@ -355,7 +355,11 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({
           }`}
         >
           {/* Question Count */}
-          <span className="text-sm text-gray-500 select-none">
+          <span
+            className={`text-sm text-gray-500 select-none ${
+              !isSubmitted && selectedChoice && !autoSubmit && "hidden sm:block"
+            }`}
+          >
             {totalQuestions - (correctCount + wrongCount)} questions left
           </span>
 
