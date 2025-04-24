@@ -10,11 +10,12 @@ import {
   setCurrentQuestionIndex,
   setLoading,
 } from "../../store/flashcardSlice";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ChoicesPanel from "./ChoicesPanel";
 import ExitOverlay from "./Exit";
 import { decryptData, encryptData } from "../../utils/encrypt";
 import ConfirmationModal from "../Common/Components/ConfirmationModal";
+import { ReactSketchCanvas, ReactSketchCanvasRef } from "react-sketch-canvas";
 
 const shuffleArray = <T,>(array: T[]): T[] => {
   return array
@@ -45,6 +46,24 @@ export default function WEB002() {
   const [modalType, setModalType] = useState("");
   const [error, setError] = useState(false);
   const [shuffledData, setShuffledData] = useState<any[]>([]);
+
+  const canvasRef = useRef<ReactSketchCanvasRef>(null);
+  const [color, setColor] = useState<string>("black");
+  const [isErasing, setIsErasing] = useState(false);
+  const [drawing, setDrawing] = useState(false);
+
+  const handleUndo = () => canvasRef.current?.undo();
+  const handleClear = () => canvasRef.current?.clearCanvas();
+
+  const handleColorChange = (color: string) => {
+    setColor(color);
+    setIsErasing(false);
+  };
+
+  const toggleEraser = (state: boolean) => {
+    setIsErasing(state);
+    canvasRef.current?.eraseMode(state);
+  };
 
   const currentQuestionIndex = useSelector(
     (state: RootState) => state.flashcard.currentQuestionIndex
@@ -141,9 +160,23 @@ export default function WEB002() {
       {ended && <ExitOverlay />}
       <TopBarWEB002 onExit={() => handleOpenModal("exit")} />
 
-      <div className="container mx-auto max-w-4xl px-4 pt-5 sm:pt-10 flex flex-col items-center mb-32">
+      <div
+        className={`relative sm:w-full ${
+          !drawing ? "pointer-events-none" : ""
+        } px-4 pt-5 sm:pt-10 flex flex-col items-center pb-52 min-h-[calc(100vh-70px)]`}
+      >
+        {/* ✍️ Canvas overlay */}
+        <ReactSketchCanvas
+          ref={canvasRef}
+          className="absolute top-0 left-0 w-full h-full z-10"
+          strokeWidth={3}
+          strokeColor={color}
+          canvasColor="transparent"
+        />
+
+        {/* ⏳ Loading */}
         {isLoading && (
-          <div className="flex flex-col gap-10 text-center justify-center items-center mt-[20vh]">
+          <div className="flex flex-col gap-10 text-center justify-center items-center mt-[20vh] z-20 relative">
             <LoaderCircle className="w-16 h-16 text-green-600 animate-spin" />
             <p className="animate-pulse">
               Loading questions, please wait... <br />
@@ -152,8 +185,9 @@ export default function WEB002() {
           </div>
         )}
 
+        {/* ❌ Error */}
         {!isLoading && error && (
-          <div className="flex flex-col gap-6 text-center justify-center items-center mt-[20vh]">
+          <div className="flex flex-col gap-6 text-center justify-center items-center mt-[20vh] z-20 relative">
             <AlertCircle className="w-14 h-14 text-gray-400" />
             <p className="text-gray-600 leading-relaxed">
               Connection is slow or the image failed to load. <br />
@@ -167,10 +201,11 @@ export default function WEB002() {
           </div>
         )}
 
+        {/* 🖼️ Question Image */}
         <img
-          className={`mx-auto w-full ${
+          className={`mx-auto w-full sm:max-w-4xl ${
             isLoading || error ? "opacity-0" : "opacity-100"
-          }`}
+          } z-0`}
           src={`/q/${q[1]}/${q[2]}/${q[0]}/${questionData.img}`}
           alt="question"
           onLoad={() => dispatch(setLoading(false))}
@@ -195,6 +230,12 @@ export default function WEB002() {
           choicesLength={questionData.choicesLength ?? 4}
           totalAnsweredQuestion={totalAnswered}
           totalQuestions={totalQuestions}
+          // for canvas
+          changeColor={handleColorChange}
+          toggleErase={toggleEraser}
+          handleClear={handleClear}
+          handleUndo={handleUndo}
+          drawing={setDrawing}
         />
       )}
     </>
