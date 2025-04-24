@@ -12,26 +12,37 @@ interface TopBarProps {
 export const TopBarWEB002: React.FC<TopBarProps> = ({ onExit }) => {
   const dispatch = useDispatch();
   const autoSubmit = useSelector((state: RootState) => state.flashcard.enabled);
-  const correctCount = useSelector((state: RootState) => state.flashcard.correctCount);
-  const wrongCount = useSelector((state: RootState) => state.flashcard.wrongCount);
-  const skippedCount = useSelector((state: RootState) => state.flashcard.skippedCount);
-  
+  const correctCount = useSelector(
+    (state: RootState) => state.flashcard.correctCount
+  );
+  const wrongCount = useSelector(
+    (state: RootState) => state.flashcard.wrongCount
+  );
+  const skippedCount = useSelector(
+    (state: RootState) => state.flashcard.skippedCount
+  );
+
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   return (
-    <nav className="p-4 top-0 left-0 w-full z-50 transition-all duration-300 bg-gray-900 text-white drop-shadow-sm">
+    <nav
+      id="header"
+      className="p-4 top-0 left-0 w-full z-50 transition-all duration-300 bg-gray-900 text-white drop-shadow-sm"
+    >
       <div className="container mx-auto flex items-center relative">
         {/* Logo - Hidden on mobile */}
-        <img 
-          src="/prepit-dark.png" 
-          alt="PREP-IT Logo" 
+        <img
+          src="/prepit-dark.png"
+          alt="PREP-IT Logo"
           className="h-8 hidden md:block"
         />
 
         {/* Scoreboard */}
-        <div className="flex items-center space-x-4 text-sm sm:text-md font-regular 
+        <div
+          className="flex items-center space-x-4 text-sm sm:text-md font-regular 
           md:absolute md:left-1/2 md:transform md:-translate-x-1/2 
-          md:justify-center justify-start w-full md:w-auto">
+          md:justify-center justify-start w-full md:w-auto"
+        >
           <div>Correct: {correctCount}</div>
           <div>Wrong: {wrongCount}</div>
           <div>Skipped: {skippedCount}</div>
@@ -49,11 +60,12 @@ export const TopBarWEB002: React.FC<TopBarProps> = ({ onExit }) => {
                 onChange={() => dispatch(toggleAutoSubmit())}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 
+              <div
+                className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 
                 rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-5 peer-checked:after:border-white 
                 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white 
-                after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">
-              </div>
+                after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"
+              ></div>
             </label>
           </div>
 
@@ -85,11 +97,12 @@ export const TopBarWEB002: React.FC<TopBarProps> = ({ onExit }) => {
                   onChange={() => dispatch(toggleAutoSubmit())}
                   className="sr-only peer"
                 />
-                <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 
+                <div
+                  className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 
                   rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-5 peer-checked:after:border-white 
                   after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white 
-                  after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">
-                </div>
+                  after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"
+                ></div>
               </label>
             </div>
 
