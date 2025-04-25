@@ -218,11 +218,12 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({
         {showMessage && (
           <>
             {/* Message Box for Mobile */}
-            <div className="absolute -top-20 left-2 z-30 2xl:hidden flex flex-col items-start">
+            <div className="absolute -top-24 left-2 z-30 2xl:hidden flex flex-col items-start">
               <div className="bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg text-sm max-w-xs flex justify-between items-start space-x-2 relative select-none">
                 <span>
-                  Try our new feature, allowing you to highlight text, draw
-                  solutions, or sketch directly on the screen.
+                  Try this new feature, allowing you to highlight text, draw
+                  solutions, or sketch directly on the screen. This works
+                  perfectly on iPad with a pen!
                 </span>
                 <button
                   onClick={closeMessage}
@@ -240,8 +241,9 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({
             <div className="absolute left-[-330px] bottom-2 z-30 hidden 2xl:flex flex-col items-start">
               <div className="bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg text-sm max-w-xs flex justify-between items-start space-x-2 relative select-none">
                 <span>
-                  Try our new feature, allowing you to highlight text, draw
-                  solutions, or sketch directly on the screen.
+                  Try this new feature, allowing you to highlight text, draw
+                  solutions, or sketch directly on the screen. This works
+                  perfectly on iPad with a pen!
                 </span>
                 <button
                   onClick={closeMessage}
