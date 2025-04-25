@@ -3,9 +3,7 @@ import {
   Clock,
   Smartphone,
   LightbulbIcon,
-  DollarSign,
   Star,
-  PencilRuler,
   PencilIcon,
 } from "lucide-react";
 
