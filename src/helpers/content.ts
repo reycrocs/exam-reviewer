@@ -22,7 +22,7 @@ export const testimony = [
     id: 3,
     quote:
       "The platform is super intuitive and mobile-friendly. I was able to practice even while commuting!",
-    name: "Kyle L.",
+    name: "Kyle Andre L.",
     role: "ITPEC IP Passer",
     image:
       "https://media.licdn.com/dms/image/v2/C5603AQE3F3THqDG5mg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1603868207304?e=2147483647&v=beta&t=sC7FORNXLtKvqQn637iLjpMOPAj51hcewGqoisHh3SU",

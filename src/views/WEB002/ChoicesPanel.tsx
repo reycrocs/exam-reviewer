@@ -223,7 +223,7 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({
                 <span>
                   Try this new feature, allowing you to highlight text, draw
                   solutions, or sketch directly on the screen. This works
-                  perfectly on iPad with a pen!
+                  perfectly on iPad/Tablet with a pen!
                 </span>
                 <button
                   onClick={closeMessage}
@@ -243,7 +243,7 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({
                 <span>
                   Try this new feature, allowing you to highlight text, draw
                   solutions, or sketch directly on the screen. This works
-                  perfectly on iPad with a pen!
+                  perfectly on iPad/Tablet with a pen!
                 </span>
                 <button
                   onClick={closeMessage}
