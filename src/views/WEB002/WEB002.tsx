@@ -172,6 +172,7 @@ export default function WEB002() {
             drawing ? "cursor-crosshair" : ""
           } ${isErasing ? "cursor-cell" : ""}`}
           strokeWidth={3}
+          eraserWidth={20}
           strokeColor={color}
           canvasColor="transparent"
         />

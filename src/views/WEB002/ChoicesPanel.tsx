@@ -17,6 +17,7 @@ import {
   PencilOff,
   RotateCcw,
   Trash2,
+  X,
 } from "lucide-react";
 
 interface ChoicesPanelProps {
@@ -194,13 +195,68 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({
   const [isErasing, setIsErasing] = useState(false);
   const [showPenTools, setShowPenTools] = useState(false);
 
+  const [showMessage, setShowMessage] = useState(() => {
+    // Check if the message has been closed previously
+    const messageClosed = localStorage.getItem("messageClosed");
+    // If messageClosed is not in localStorage, default to true (show message)
+    return messageClosed !== "true"; // This will show the message if it's not closed
+  });
+
+  const closeMessage = () => {
+    // Set localStorage flag to remember that the user has closed the message
+    localStorage.setItem("messageClosed", "true");
+    setShowMessage(false);
+  };
+
   const handleColorSelect = (color: string) => {
     setSelectedColor(color);
   };
 
   return (
     <div className="fixed bottom-0 w-full flex flex-col z-20">
-      <div className="container mx-auto max-w-4xl flex justify-between items-center p-2">
+      <div className="container mx-auto max-w-4xl flex justify-between items-center p-2 relative">
+        {showMessage && (
+          <>
+            {/* Message Box for Mobile */}
+            <div className="absolute -top-20 left-2 z-30 2xl:hidden flex flex-col items-start">
+              <div className="bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg text-sm max-w-xs flex justify-between items-start space-x-2 relative select-none">
+                <span>
+                  Try our new feature, allowing you to highlight text, draw
+                  solutions, or sketch directly on the screen.
+                </span>
+                <button
+                  onClick={closeMessage}
+                  className="text-white hover:text-gray-400"
+                >
+                  <X size={16} />
+                </button>
+
+                {/* Pointer */}
+                <div className="absolute left-3 -bottom-2 w-0 h-0 border-l-[8px] border-r-[8px] border-t-[10px] border-l-transparent border-r-transparent border-t-gray-900"></div>
+              </div>
+            </div>
+
+            {/* Message Box for Desktop */}
+            <div className="absolute left-[-330px] bottom-2 z-30 hidden 2xl:flex flex-col items-start">
+              <div className="bg-gray-900 text-white px-4 py-2 rounded-lg shadow-lg text-sm max-w-xs flex justify-between items-start space-x-2 relative select-none">
+                <span>
+                  Try our new feature, allowing you to highlight text, draw
+                  solutions, or sketch directly on the screen.
+                </span>
+                <button
+                  onClick={closeMessage}
+                  className="text-white hover:text-gray-400"
+                >
+                  <X size={16} />
+                </button>
+
+                {/* Pointer */}
+                <div className="absolute -right-2 bottom-2 w-0 h-0 border-t-[8px] border-b-[8px] border-l-[10px] border-t-transparent border-b-transparent border-l-gray-900"></div>
+              </div>
+            </div>
+          </>
+        )}
+
         {/* Left side - Tools */}
         <div className="flex items-center space-x-2">
           {/* Undo Button */}
@@ -272,6 +328,7 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({
                 onClick={() => {
                   toggleErase(true);
                   setIsErasing(true);
+                  drawing(false);
                   setIsDrawing(false);
                   setShowPenTools(false);
                 }}
