@@ -36,16 +36,24 @@ const initialState: FlashcardState = loadState() || defaultState;
 // Helper function to move to the next question
 const getNextQuestionIndex = (state: FlashcardState) => {
   state.isLoading = true;
-  if (state.currentQuestionIndex < state.totalQuestions - 1 && !state.skippedOnly) {
+  if (
+    state.currentQuestionIndex < state.totalQuestions - 1 &&
+    !state.skippedOnly
+  ) {
     return state.currentQuestionIndex + 1; // Move to the next question normally
   }
 
   if (state.skippedQuestions.length > 0) {
     state.skippedOnly = true;
-    
+
     // If only skipped questions remain, cycle through them instead of reducing the count
-    const currentIndex = state.skippedQuestions.indexOf(state.currentQuestionIndex);
-    if (currentIndex !== -1 && currentIndex < state.skippedQuestions.length - 1) {
+    const currentIndex = state.skippedQuestions.indexOf(
+      state.currentQuestionIndex
+    );
+    if (
+      currentIndex !== -1 &&
+      currentIndex < state.skippedQuestions.length - 1
+    ) {
       state.isLoading = false;
       return state.skippedQuestions[currentIndex + 1]; // Move to the next skipped question
     }
@@ -55,7 +63,6 @@ const getNextQuestionIndex = (state: FlashcardState) => {
   state.isLoading = false;
   return state.currentQuestionIndex; // No more questions left
 };
-
 
 const FlashcardSlice = createSlice({
   name: "flashcard",
@@ -91,13 +98,17 @@ const FlashcardSlice = createSlice({
     },
     incrementCorrect: (state) => {
       state.correctCount += 1;
-      state.skippedQuestions = state.skippedQuestions.filter(q => q !== state.currentQuestionIndex);
+      state.skippedQuestions = state.skippedQuestions.filter(
+        (q) => q !== state.currentQuestionIndex
+      );
       state.skippedCount = state.skippedQuestions.length;
       saveState(state);
     },
     incrementWrong: (state) => {
       state.wrongCount += 1;
-      state.skippedQuestions = state.skippedQuestions.filter(q => q !== state.currentQuestionIndex);
+      state.skippedQuestions = state.skippedQuestions.filter(
+        (q) => q !== state.currentQuestionIndex
+      );
       state.skippedCount = state.skippedQuestions.length;
       saveState(state);
     },
@@ -112,13 +123,13 @@ const FlashcardSlice = createSlice({
       const preserveEnabled = state.enabled;
       Object.assign(state, defaultState);
       state.enabled = preserveEnabled;
-      
+
       saveState(state);
-    
-      localStorage.removeItem('selectedChoice');
-      localStorage.removeItem('isSubmitted');
-      localStorage.removeItem('hasChecked');
-      localStorage.removeItem('shuffledQuestionData');
+
+      localStorage.removeItem("selectedChoice");
+      localStorage.removeItem("isSubmitted");
+      localStorage.removeItem("hasChecked");
+      localStorage.removeItem("shuffledQuestionData");
     },
     resetFlashcards: (state) => {
       const preserveEnabled = state.enabled;
@@ -126,13 +137,13 @@ const FlashcardSlice = createSlice({
       Object.assign(state, defaultState);
       state.enabled = preserveEnabled;
       state.totalQuestions = preserveTotalQuestions;
-      
+
       saveState(state);
-    
-      localStorage.removeItem('selectedChoice');
-      localStorage.removeItem('isSubmitted');
-      localStorage.removeItem('hasChecked');
-      localStorage.removeItem('shuffledQuestionData');
+
+      localStorage.removeItem("selectedChoice");
+      localStorage.removeItem("isSubmitted");
+      localStorage.removeItem("hasChecked");
+      localStorage.removeItem("shuffledQuestionData");
     },
     setCurrentQuestionIndex: (state) => {
       state.currentQuestionIndex = getNextQuestionIndex(state);

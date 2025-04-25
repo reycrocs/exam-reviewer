@@ -48,7 +48,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       </button>
 
       {tooltip && (
-        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap z-10">
+        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap z-10 select-none">
           {tooltip}
         </div>
       )}
