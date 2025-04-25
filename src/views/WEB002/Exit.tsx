@@ -3,65 +3,94 @@ import { resetFlashcards, toggleEnded } from "../../store/flashcardSlice";
 import { RootState } from "../../store/store";
 import CustomButton from "../Common/Components/CustomButton";
 
-const ExitOverlay = () => {
-    const dispatch = useDispatch();
-    const ended = useSelector((state: RootState) => state.flashcard.ended);
-    const showTryAgain = useSelector((state: RootState) => state.flashcard.tryAgain);
-    const correct = useSelector((state: RootState) => state.flashcard.correctCount);
-    const total = useSelector((state: RootState) => state.flashcard.totalQuestions);
+interface ExitOverlayProps {
+  onExit: () => void;
+}
 
-    const tryAgain = () => {
-        dispatch(toggleEnded(false));
-        dispatch(resetFlashcards());
-    };
+const ExitOverlay: React.FC<ExitOverlayProps> = ({ onExit }) => {
+  const dispatch = useDispatch();
+  const ended = useSelector((state: RootState) => state.flashcard.ended);
+  const showTryAgain = useSelector(
+    (state: RootState) => state.flashcard.tryAgain
+  );
+  const correct = useSelector(
+    (state: RootState) => state.flashcard.correctCount
+  );
+  const total = useSelector(
+    (state: RootState) => state.flashcard.totalQuestions
+  );
 
-    // Calculate the percentage score
-    const scorePercentage = (correct / total) * 100;
+  const tryAgain = () => {
+    dispatch(toggleEnded(false));
+    dispatch(resetFlashcards());
+  };
 
-    // Dynamic message based on the score percentage
-    let scoreMessage = '';
-    if (scorePercentage === 100) {
-        scoreMessage = 'Excellent! You nailed every question! 🎯';
-    } else if (scorePercentage >= 90) {
-        scoreMessage = 'Outstanding! You’re almost there! 🌟';
-    } else if (scorePercentage >= 80) {
-        scoreMessage = 'Great job! Keep it up! 👍';
-    } else if (scorePercentage >= 70) {
-        scoreMessage = 'Awesome work! You’re on the right track! 🚀';
-    } else if (scorePercentage >= 60) {
-        scoreMessage = 'Good work! With a little more practice, you’ll be even better! 💪';
-    } else if (scorePercentage >= 50) {
-        scoreMessage = 'Not bad! You’re getting better, just keep at it! 🔥';
-    } else if (scorePercentage >= 40) {
-        scoreMessage = 'You’re getting there! A bit more study will help you improve. 📚';
-    } else {
-        scoreMessage = 'Keep going! Don’t give up; every mistake is a learning opportunity. 💡';
-    }
+  // Calculate the percentage score
+  const scorePercentage = (correct / total) * 100;
 
-    if (!ended) return null;
+  // Dynamic message based on the score percentage
+  let scoreMessage = "";
+  if (scorePercentage === 100) {
+    scoreMessage = "Excellent! You nailed every question! 🎯";
+  } else if (scorePercentage >= 90) {
+    scoreMessage = "Outstanding! You’re almost there! 🌟";
+  } else if (scorePercentage >= 80) {
+    scoreMessage = "Great job! Keep it up! 👍";
+  } else if (scorePercentage >= 70) {
+    scoreMessage = "Awesome work! You’re on the right track! 🚀";
+  } else if (scorePercentage >= 60) {
+    scoreMessage =
+      "Good work! With a little more practice, you’ll be even better! 💪";
+  } else if (scorePercentage >= 50) {
+    scoreMessage = "Not bad! You’re getting better, just keep at it! 🔥";
+  } else if (scorePercentage >= 40) {
+    scoreMessage =
+      "You’re getting there! A bit more study will help you improve. 📚";
+  } else {
+    scoreMessage =
+      "Keep going! Don’t give up; every mistake is a learning opportunity. 💡";
+  }
 
-    return (
-        <div className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 backdrop-blur-md px-4">
-            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white animate-bounce text-center">
-                🎉 Congratulations! 🎉
-            </h1>
+  if (!ended) return null;
 
-            {/* Dynamic Score Message */}
-            <p className="mt-4 text-center text-white text-sm sm:text-md md:text-lg">{scoreMessage}</p>
+  return (
+    <div className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 backdrop-blur-md px-4 select-none z-10">
+      <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white animate-bounce text-center">
+        🎉 Congratulations! 🎉
+      </h1>
 
-            {/* Score Display */}
-            <div className="mt-4 mb-6 text-center text-white text-sm sm:text-md md:text-lg space-y-2">
-                <p className="mt-2">
-                    Total Score: <span className="font-bold">{correct}/{total}</span> ({scorePercentage.toFixed(2)}%)
-                </p>
-            </div>
+      {/* Dynamic Score Message */}
+      <p className="mt-4 text-center text-white text-sm sm:text-md md:text-lg">
+        {scoreMessage}
+      </p>
 
-            {/* Exit Button */}
-            {showTryAgain && (
-                <CustomButton text="Try Again" onClick={tryAgain} />
-            )}
+      {/* Score Display */}
+      <div className="mt-4 mb-6 text-center text-white text-sm sm:text-md md:text-lg space-y-2">
+        <p className="mt-2">
+          Total Score:{" "}
+          <span className="font-bold">
+            {correct}/{total}
+          </span>{" "}
+          ({scorePercentage.toFixed(2)}%)
+        </p>
+      </div>
+
+      {/* Exit Button */}
+      {showTryAgain && (
+        <div className="flex items-center justify-center gap-4 mt-4">
+          <CustomButton text="Try Again" onClick={tryAgain} />
+
+          <span className="text-white">or</span>
+
+          <CustomButton
+            text="Exit Flashcards"
+            className="bg-gray-900 hover:bg-red-500 text-white"
+            onClick={onExit}
+          />
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default ExitOverlay;

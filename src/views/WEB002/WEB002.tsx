@@ -81,6 +81,13 @@ export default function WEB002() {
     (state: RootState) => state.flashcard.totalQuestions
   );
   const ended = useSelector((state: RootState) => state.flashcard.ended);
+
+  useEffect(() => {
+    if (ended) {
+      canvasRef.current?.clearCanvas();
+    }
+  }, [ended]);
+
   const isLoading = useSelector(
     (state: RootState) => state.flashcard.isLoading
   );
@@ -157,12 +164,12 @@ export default function WEB002() {
 
   return (
     <>
-      {ended && <ExitOverlay />}
+      {ended && <ExitOverlay onExit={() => handleOpenModal("exit")} />}
       <TopBarWEB002 onExit={() => handleOpenModal("exit")} />
 
       <div
         className={`relative sm:w-full ${
-          !drawing && !isErasing ? "pointer-events-none" : ""
+          ended || (!drawing && !isErasing) ? "pointer-events-none" : ""
         } px-4 pt-5 sm:pt-10 flex flex-col items-center pb-52 min-h-[calc(100vh-70px)]`}
       >
         {/* ✍️ Canvas overlay */}
