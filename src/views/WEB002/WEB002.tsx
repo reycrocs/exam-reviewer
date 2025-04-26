@@ -51,6 +51,7 @@ export default function WEB002() {
   const [color, setColor] = useState<string>("black");
   const [isErasing, setIsErasing] = useState(false);
   const [drawing, setDrawing] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const handleUndo = () => canvasRef.current?.undo();
   const handleClear = () => canvasRef.current?.clearCanvas();
@@ -165,19 +166,26 @@ export default function WEB002() {
   return (
     <>
       {ended && <ExitOverlay onExit={() => handleOpenModal("exit")} />}
-      <TopBarWEB002 onExit={() => handleOpenModal("exit")} />
+      <TopBarWEB002
+        onExit={() => handleOpenModal("exit")}
+        setShowDropdown={setShowDropdown}
+      />
 
       <div
         className={`relative sm:w-full ${
           ended || (!drawing && !isErasing) ? "pointer-events-none" : ""
-        } px-4 pt-5 sm:pt-10 flex flex-col items-center pb-52 min-h-[calc(100vh-70px)]`}
+        } px-4 pt-5 sm:pt-10 flex flex-col items-center pb-52 min-h-[calc(100vh-70px)] ${
+          showDropdown && "hidden"
+        }`}
       >
         {/* ✍️ Canvas overlay */}
         <ReactSketchCanvas
           ref={canvasRef}
-          className={`absolute top-0 left-0 !border-none w-full h-full z-10 ${
+          className={`top-0 left-0 !border-none w-full h-full z-10 ${
             drawing ? "cursor-crosshair" : ""
-          } ${isErasing ? "cursor-cell" : ""}`}
+          } ${isErasing ? "cursor-cell" : ""} ${
+            !showDropdown ? "absolute" : "hidden"
+          }`}
           strokeWidth={3}
           eraserWidth={20}
           strokeColor={color}
@@ -222,6 +230,18 @@ export default function WEB002() {
           onError={() => setError(true)}
         />
       </div>
+
+      {showDropdown && (
+        <img
+          className={`px-4 pt-5 sm:pt-10 pb-52 mx-auto w-full sm:max-w-4xl ${
+            isLoading || error ? "opacity-0" : "opacity-100"
+          } z-0 select-none`}
+          src={`/q/${q[1]}/${q[2]}/${q[0]}/${questionData.img}`}
+          alt="question"
+          onLoad={() => dispatch(setLoading(false))}
+          onError={() => setError(true)}
+        />
+      )}
 
       {isModalOpen && (
         <ConfirmationModal

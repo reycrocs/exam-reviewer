@@ -281,6 +281,8 @@ const ChoicesPanel: React.FC<ChoicesPanelProps> = ({
             onClick={() => {
               handleClear();
               toggleErase(false);
+              setIsDrawing(false);
+              drawing(false);
             }}
             tooltip="Delete Drawings"
           >

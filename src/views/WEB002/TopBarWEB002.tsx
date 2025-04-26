@@ -7,9 +7,13 @@ import CustomButton from "../Common/Components/CustomButton";
 
 interface TopBarProps {
   onExit: () => void;
+  setShowDropdown: (state: boolean) => void;
 }
 
-export const TopBarWEB002: React.FC<TopBarProps> = ({ onExit }) => {
+export const TopBarWEB002: React.FC<TopBarProps> = ({
+  onExit,
+  setShowDropdown,
+}) => {
   const dispatch = useDispatch();
   const autoSubmit = useSelector((state: RootState) => state.flashcard.enabled);
   const correctCount = useSelector(
@@ -79,14 +83,19 @@ export const TopBarWEB002: React.FC<TopBarProps> = ({ onExit }) => {
 
         {/* Mobile View - Cog Icon */}
         <div className="ml-auto md:hidden">
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <button
+            onClick={() => {
+              setIsMenuOpen(!isMenuOpen);
+              setShowDropdown(!isMenuOpen);
+            }}
+          >
             <Settings size={28} />
           </button>
         </div>
 
         {/* Mobile Dropdown Menu */}
         {isMenuOpen && (
-          <div className="absolute top-full right-0 mt-2 w-48 bg-gray-800 text-white rounded-lg shadow-lg p-4 flex flex-col sm:hidden space-y-3">
+          <div className="absolute top-full right-0 mt-2 w-48 bg-gray-800 text-white rounded-lg shadow-lg p-4 flex flex-col sm:hidden space-y-3 z-[60]">
             {/* Auto Submit Toggle */}
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium">Auto Submit</span>
