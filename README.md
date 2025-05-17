@@ -1,21 +1,95 @@
-# React + TypeScript + Vite
+# Exam Reviewer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web application built with React and TypeScript for reviewing and managing exams. This application provides a user-friendly interface for exam preparation and review.
 
-While this project uses React, Vite supports many popular JS frameworks. [See all the supported frameworks](https://vitejs.dev/guide/#scaffolding-your-first-vite-project).
+## Features
 
-## Deploy Your Own
+- Interactive exam review interface
+- Secure exam storage with encryption
+- Drawing capabilities for visual notes
+- Color customization options
+- Responsive design for all devices
+- Modern UI with Tailwind CSS
 
-Deploy your own Vite project with Vercel.
+## Tech Stack
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/vercel/tree/main/examples/vite-react&template=vite-react)
+- **Frontend Framework**: React 18
+- **Language**: TypeScript
+- **State Management**: Redux Toolkit
+- **Routing**: React Router DOM
+- **Styling**: Tailwind CSS
+- **Build Tool**: Vite
+- **Additional Libraries**:
+  - React Sketch Canvas for drawing
+  - Canvas Confetti for celebrations
+  - Crypto-js for encryption
+  - React Color for color picker
+  - Font Awesome for icons
+  - Lucide React for additional icons
 
-_Live Example: https://vite-react-example.vercel.app_
+## Getting Started
 
-### Deploying From Your Terminal
+### Prerequisites
 
-You can deploy your new Vite project with a single command from your terminal using [Vercel CLI](https://vercel.com/download):
+- Node.js (Latest LTS version recommended)
+- npm or yarn package manager
 
-```shell
-$ vercel
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone [repository-url]
+   cd exam-reviewer
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run lint` - Run ESLint
+- `npm run preview` - Preview production build
+
+## Project Structure
+
 ```
+src/
+├── assets/         # Static assets
+├── context/        # React context providers
+├── encryptedExams/ # Encrypted exam data
+├── helpers/        # Helper functions
+├── store/          # Redux store configuration
+├── utils/          # Utility functions
+├── views/          # React components and pages
+└── main.tsx        # Application entry point
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
